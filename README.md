@@ -3,231 +3,190 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daily Entertainment Quiz | Debeatzgh</title>
+<title>Debeatzgh Entertainment Hub</title>
 
 <style>
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
-  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  color: #fff;
   margin: 0;
-  padding: 20px;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: linear-gradient(135deg,#0f172a,#020617);
+  color: #fff;
 }
 
-.quiz-box {
-  max-width: 600px;
-  margin: auto;
-  background: rgba(0,0,0,.4);
-  padding: 20px;
-  border-radius: 18px;
-  box-shadow: 0 15px 30px rgba(0,0,0,.5);
-}
-
-h1 {
+/* Header */
+.header {
   text-align: center;
+  padding: 40px 20px 20px;
+}
+.header h1 {
+  font-size: 2rem;
   margin-bottom: 10px;
 }
-
-.question {
-  font-size: 18px;
-  margin: 20px 0;
+.header p {
+  color: #cbd5f5;
+  max-width: 720px;
+  margin: auto;
 }
 
-.btns {
-  display: flex;
-  gap: 12px;
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap: 24px;
+  padding: 30px;
+  max-width: 1200px;
+  margin: auto;
 }
 
-button {
-  flex: 1;
-  padding: 14px;
-  border-radius: 14px;
-  border: none;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
+/* Card */
+.card {
+  background: rgba(255,255,255,.06);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 35px rgba(0,0,0,.4);
+  transition: transform .3s ease;
+}
+.card:hover { transform: translateY(-6px); }
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
 }
 
-.true { background: #16a34a; color:#fff; }
-.false { background: #dc2626; color:#fff; }
-
-button:hover { opacity: .9; }
-
-#result, #ai-box {
-  display: none;
-  margin-top: 20px;
+.card-content {
+  padding: 18px;
+}
+.card-content h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+.card-content p {
+  font-size: .9rem;
+  color: #dbeafe;
+  margin-bottom: 14px;
 }
 
-.recommendation {
-  background: rgba(255,255,255,.1);
-  padding: 14px;
-  border-radius: 14px;
-  margin-bottom: 12px;
-}
-
-.media-btn {
+/* Button */
+.card-btn {
   display: inline-block;
-  background: #0f9d58;
-  color: #fff;
-  padding: 12px 16px;
-  border-radius: 12px;
-  font-weight: 700;
+  background: linear-gradient(135deg,#22c55e,#16a34a);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: .85rem;
+  font-weight: 600;
   cursor: pointer;
-  margin-top: 8px;
-}
-
-.media-btn.youtube {
-  background: #ff0000;
+  box-shadow: 0 6px 20px rgba(0,0,0,.35);
 }
 
 /* Modal */
-#media-modal {
+#modal {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.9);
-  z-index: 99999;
+  background: rgba(0,0,0,.85);
+  z-index: 9999;
 }
-#media-modal iframe {
+
+.modal-box {
+  width: 96%;
+  height: 92%;
+  margin: 3% auto;
+  background: #000;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.modal-box iframe {
   width: 100%;
   height: 100%;
   border: none;
 }
+
 .close {
   position: absolute;
-  top: 12px;
-  right: 18px;
-  font-size: 30px;
+  top: 10px;
+  right: 16px;
+  font-size: 28px;
   cursor: pointer;
+  color: #22c55e;
+  z-index: 10;
 }
 </style>
 </head>
 
 <body>
 
-<div class="quiz-box">
-  <h1>🎉 Daily Entertainment Quiz</h1>
-  <p id="progress"></p>
-
-  <div class="question" id="question"></div>
-
-  <div class="btns">
-    <button class="true" onclick="answer(true)">TRUE</button>
-    <button class="false" onclick="answer(false)">FALSE</button>
-  </div>
-
-  <div id="result"></div>
-
-  <div id="ai-box">
-    <h3>🤖 AI Recommendations</h3>
-    <div id="ai-results"></div>
-  </div>
+<!-- HEADER -->
+<div class="header">
+  <h1>🎭 Debeatzgh Entertainment Hub</h1>
+  <p>Explore blog updates, music, games, and video content in one fun and interactive space.</p>
 </div>
 
-<!-- MEDIA MODAL -->
-<div id="media-modal">
-  <div class="close" onclick="closeMedia()">✕</div>
-  <iframe id="media-frame"></iframe>
+<!-- GRID -->
+<div class="grid">
+
+  <!-- Blog -->
+  <div class="card">
+    <img src="https://debeatzgh.wordpress.com/wp-content/uploads/2025/12/screenshot_20251215-234743_17563327224807958415.png">
+    <div class="card-content">
+      <h3>📰 Blog Updates</h3>
+      <p>Latest trends, digital stories, entertainment updates and creative tech news.</p>
+      <div class="card-btn" onclick="openFrame('https://appdategh.blogspot.com/')">Read Blog</div>
+    </div>
+  </div>
+
+  <!-- Music -->
+  <div class="card">
+    <img src="https://debeatzgh.wordpress.com/wp-content/uploads/2025/08/wp-17550417188267308669484942620808.jpg">
+    <div class="card-content">
+      <h3>🎵 Audiomack Tracks</h3>
+      <p>Enjoy curated beats, study music, chill vibes and creative soundscapes.</p>
+      <div class="card-btn" onclick="openFrame('https://debeatzgh1.github.io/tracks/')">Play Music</div>
+    </div>
+  </div>
+
+  <!-- Games -->
+  <div class="card">
+    <img src="https://debeatzgh.wordpress.com/wp-content/uploads/2025/08/wp-17550752768858270075844257043940.jpg">
+    <div class="card-content">
+      <h3>🎮 Games & Quizzes</h3>
+      <p>Interactive games and quizzes for fun, learning, and entertainment.</p>
+      <div class="card-btn" onclick="openFrame('https://debeatzgh1.github.io/games-/')">Play Games</div>
+    </div>
+  </div>
+
+  <!-- YouTube -->
+  <div class="card">
+    <img src="https://debeatzgh.wordpress.com/wp-content/uploads/2025/08/createamoderntech-inspiredlogoforadigitalcontenthubcalledappdategh4933013559151235986.jpg">
+    <div class="card-content">
+      <h3>📺 Video Playlist</h3>
+      <p>Watch curated entertainment and digital creativity videos.</p>
+      <div class="card-btn" onclick="openFrame('https://debeatzgh1.github.io/E-Hub-/')">Watch Videos</div>
+    </div>
+  </div>
+
 </div>
 
-<!-- SOUND EFFECTS -->
-<audio id="clickSound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
-<audio id="correctSound" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
-<audio id="wrongSound" src="https://assets.mixkit.co/active_storage/sfx/209/209-preview.mp3"></audio>
-<audio id="finishSound" src="https://assets.mixkit.co/active_storage/sfx/1110/1110-preview.mp3"></audio>
+<!-- MODAL -->
+<div id="modal">
+  <div class="modal-box">
+    <span class="close" onclick="closeFrame()">✖</span>
+    <iframe id="frame"></iframe>
+  </div>
+</div>
 
 <script>
-const questions = [
-  {q:"Ghanaian music is popular across Africa.", a:true},
-  {q:"Audiomack is only for podcasts.", a:false},
-  {q:"YouTube playlists can stream music videos.", a:true},
-  {q:"Entertainment quizzes improve engagement.", a:true},
-  {q:"Afrobeats originated outside Africa.", a:false}
-];
-
-let index = 0;
-let score = 0;
-
-const qBox = document.getElementById("question");
-const progress = document.getElementById("progress");
-
-function loadQuestion() {
-  progress.innerText = `Question ${index+1} of ${questions.length}`;
-  qBox.innerText = questions[index].q;
+function openFrame(url){
+  document.getElementById("frame").src = url;
+  document.getElementById("modal").style.display = "block";
 }
 
-function play(id) {
-  const s = document.getElementById(id);
-  s.currentTime = 0;
-  s.play();
+function closeFrame(){
+  document.getElementById("modal").style.display = "none";
+  document.getElementById("frame").src = "";
 }
-
-function answer(val) {
-  play("clickSound");
-
-  if (val === questions[index].a) {
-    score++;
-    play("correctSound");
-  } else {
-    play("wrongSound");
-  }
-
-  index++;
-  if (index < questions.length) {
-    loadQuestion();
-  } else {
-    finishQuiz();
-  }
-}
-
-function finishQuiz() {
-  play("finishSound");
-  document.querySelector(".btns").style.display = "none";
-
-  document.getElementById("result").style.display = "block";
-  document.getElementById("result").innerHTML =
-    `<h2>✅ Your Score: ${score}/${questions.length}</h2>`;
-
-  showRecommendations();
-}
-
-function showRecommendations() {
-  document.getElementById("ai-box").style.display = "block";
-
-  document.getElementById("ai-results").innerHTML = `
-    <div class="recommendation">
-      🎧 <strong>Music Recommendation</strong><br>
-      Enjoy curated mixes from Ghanaian DJs
-      <br>
-      <span class="media-btn"
-        onclick="openMedia('https://audiomack.com/debeatz4')">
-        ▶ Open Audiomack @debeatz4
-      </span>
-    </div>
-
-    <div class="recommendation">
-      📺 <strong>Video Recommendation</strong><br>
-      Trending entertainment playlists
-      <br>
-      <span class="media-btn youtube"
-        onclick="openMedia('https://youtube.com/playlist?list=PLMOQxjh_hNfRbNjMEMpG_wBsf4NODJGEG')">
-        ▶ Open YouTube Playlist
-      </span>
-    </div>
-  `;
-}
-
-function openMedia(url) {
-  document.getElementById("media-frame").src = url;
-  document.getElementById("media-modal").style.display = "block";
-}
-
-function closeMedia() {
-  document.getElementById("media-frame").src = "";
-  document.getElementById("media-modal").style.display = "none";
-}
-
-loadQuestion();
 </script>
 
 </body>
