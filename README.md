@@ -133,7 +133,7 @@ body {
     <div class="card-content">
       <h3>📰 Blog Updates</h3>
       <p>Latest trends, digital stories, entertainment updates and creative tech news.</p>
-      <div class="card-btn" onclick="openFrame('https://youtube.com/playlist?list=PLMOQxjh_hNfSkZyV_sjQfiHpsHDpHjb1u&si=pa7QhBADcW2j0G9I')">Read Blog</div>
+      <div class="card-btn" onclick="openFrame('https://appdategh.blogspot.com/')">Read Blog</div>
     </div>
   </div>
 
