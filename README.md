@@ -121,7 +121,7 @@ body {
 <!-- HEADER -->
 <div class="header">
   <h1>🎭 Debeatzgh Entertainment Hub</h1>
-  <p>Explore blog updates, music, games, and video content in one fun and interactive space.</p>
+  <p>Explore blog updates, music, games, and video playlists in one fun and interactive space.</p>
 </div>
 
 <!-- GRID -->
@@ -132,7 +132,7 @@ body {
     <img src="https://debeatzgh.wordpress.com/wp-content/uploads/2025/12/screenshot_20251215-234743_17563327224807958415.png">
     <div class="card-content">
       <h3>📰 Blog Updates</h3>
-      <p>Latest trends, digital stories, entertainment updates and creative tech news.</p>
+      <p>Latest trends, digital stories, entertainment updates, and creative tech insights.</p>
       <div class="card-btn" onclick="openFrame('https://appdategh.blogspot.com/')">Read Blog</div>
     </div>
   </div>
@@ -141,8 +141,8 @@ body {
   <div class="card">
     <img src="https://debeatzgh.wordpress.com/wp-content/uploads/2025/08/wp-17550417188267308669484942620808.jpg">
     <div class="card-content">
-      <h3>🎵 Audiomack Tracks</h3>
-      <p>Enjoy curated beats, study music, chill vibes and creative soundscapes.</p>
+      <h3>🎵 Audiomack Streams</h3>
+      <p>Listen to curated beats, chill vibes, focus music, and creative soundscapes.</p>
       <div class="card-btn" onclick="openFrame('https://debeatzgh1.github.io/tracks/')">Play Music</div>
     </div>
   </div>
@@ -152,18 +152,20 @@ body {
     <img src="https://debeatzgh.wordpress.com/wp-content/uploads/2025/08/wp-17550752768858270075844257043940.jpg">
     <div class="card-content">
       <h3>🎮 Games & Quizzes</h3>
-      <p>Interactive games and quizzes for fun, learning, and entertainment.</p>
+      <p>Engaging games and quizzes designed for fun, learning, and interaction.</p>
       <div class="card-btn" onclick="openFrame('https://debeatzgh1.github.io/games-/')">Play Games</div>
     </div>
   </div>
 
-  <!-- YouTube -->
+  <!-- YouTube Playlist (NEW) -->
   <div class="card">
-    <img src="https://debeatzgh.wordpress.com/wp-content/uploads/2025/08/createamoderntech-inspiredlogoforadigitalcontenthubcalledappdategh4933013559151235986.jpg">
+    <img src="https://debeatzgh.wordpress.com/wp-content/uploads/2025/08/wp-17550417028037724303471824316179.jpg">
     <div class="card-content">
-      <h3>📺 Video Playlist</h3>
-      <p>Watch curated entertainment and digital creativity videos.</p>
-      <div class="card-btn" onclick="openFrame('https://debeatzgh1.github.io/E-Hub-/')">Watch Videos</div>
+      <h3>📺 YouTube Playlist</h3>
+      <p>Watch curated videos featuring creativity, entertainment, tutorials, and digital inspiration.</p>
+      <div class="card-btn" onclick="openFrame('https://www.youtube.com/embed/videoseries?list=PLMOQxjh_hNfSkZyV_sjQfiHpsHDpHjb1u')">
+        Watch Playlist
+      </div>
     </div>
   </div>
 
@@ -173,7 +175,7 @@ body {
 <div id="modal">
   <div class="modal-box">
     <span class="close" onclick="closeFrame()">✖</span>
-    <iframe id="frame"></iframe>
+    <iframe id="frame" allowfullscreen></iframe>
   </div>
 </div>
 
