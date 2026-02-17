@@ -1,3 +1,195 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --brand-color: #FF0000;
+            --brand-glow: rgba(255, 0, 0, 0.5);
+            --glass: rgba(15, 15, 15, 0.95);
+            --bg-dark: #0d1117;
+        }
+
+        [data-theme="spotify"] {
+            --brand-color: #1DB954;
+            --brand-glow: rgba(29, 185, 84, 0.5);
+        }
+
+        body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: var(--bg-dark); color: white; transition: background 0.3s; }
+
+        /* --- FLOATING BANNER --- */
+        .ehub-banner {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 340px;
+            height: 52px;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6px 0 15px;
+            z-index: 9999;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px var(--brand-glow);
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .brand-icon { width: 30px; height: 30px; background: var(--brand-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .play-tri { width: 0; height: 0; border-top: 6px solid transparent; border-left: 9px solid white; border-bottom: 6px solid transparent; margin-left: 2px; }
+
+        /* --- HUB CONTAINER --- */
+        #hub-container {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.98);
+            display: none;
+            flex-direction: column;
+            z-index: 10000;
+        }
+
+        #hub-container.mini {
+            inset: auto; right: 20px; bottom: 20px;
+            width: 320px; height: 200px;
+            border-radius: 16px; border: 2px solid var(--brand-color);
+            box-shadow: 0 20px 50px rgba(0,0,0,1);
+        }
+
+        .hub-header {
+            height: 60px;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            border-bottom: 1px solid #333;
+        }
+
+        .controls { display: flex; gap: 8px; align-items: center; }
+
+        .btn {
+            border: none; color: white; padding: 6px 12px; border-radius: 6px;
+            cursor: pointer; font-size: 0.75rem; font-weight: bold;
+        }
+
+        .btn-timer { background: #333; border: 1px solid #555; }
+        .btn-timer.active { border-color: var(--brand-color); color: var(--brand-color); }
+        .btn-min { background: #444; }
+        .btn-close { background: var(--brand-color); }
+
+        #ehub-frame { width: 100%; flex-grow: 1; border: none; background: #000; }
+        .live-dot { width: 8px; height: 8px; background: var(--brand-color); border-radius: 50%; animation: pulse 1.5s infinite; margin-left: 8px; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    </style>
+</head>
+<body data-theme="youtube">
+
+    <div class="ehub-banner" onclick="openHub()">
+        <div style="display:flex; align-items:center;">
+            <div class="brand-icon"><div class="play-tri"></div></div>
+            <span style="color:white; margin-left:10px; font-weight:800; font-size:0.8rem;">E-HUB PLAYER</span>
+            <div class="live-dot"></div>
+        </div>
+        <button style="background:var(--brand-color); color:white; border:none; border-radius:20px; padding:8px 18px; font-size:0.7rem; font-weight:bold; cursor:pointer;">LAUNCH</button>
+    </div>
+
+    <div id="hub-container">
+        <div class="hub-header">
+            <div class="controls">
+                <button class="btn btn-timer" id="timerBtn" onclick="toggleSleepTimer()">Sleep Timer (Off)</button>
+                <button class="btn" style="background:#222;" onclick="toggleTheme()">Theme</button>
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-min" id="minBtn" onclick="toggleMini()">Minimize</button>
+                <button class="btn btn-close" onclick="closeHub()">✕</button>
+            </div>
+        </div>
+        <iframe id="ehub-frame" src=""></iframe>
+    </div>
+
+    <script>
+        const container = document.getElementById('hub-container');
+        const frame = document.getElementById('ehub-frame');
+        const minBtn = document.getElementById('minBtn');
+        const timerBtn = document.getElementById('timerBtn');
+        let sleepTimeout = null;
+        let countdownInterval = null;
+
+        // --- PERSISTENCE LOGIC ---
+        window.onload = () => {
+            const savedTheme = localStorage.getItem('ehub-theme') || 'youtube';
+            document.body.setAttribute('data-theme', savedTheme);
+        };
+
+        function openHub() {
+            if (container.classList.contains('mini')) {
+                toggleMini();
+            } else {
+                frame.src = "https://debeatzgh1.github.io/E-Hub-/";
+                container.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const newTheme = body.getAttribute('data-theme') === 'youtube' ? 'spotify' : 'youtube';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('ehub-theme', newTheme);
+        }
+
+        function toggleMini() {
+            const isMini = container.classList.toggle('mini');
+            minBtn.innerText = isMini ? "Maximize" : "Minimize";
+            document.body.style.overflow = isMini ? 'auto' : 'hidden';
+        }
+
+        function closeHub() {
+            container.style.display = 'none';
+            container.classList.remove('mini');
+            frame.src = "";
+            document.body.style.overflow = 'auto';
+            clearSleepTimer();
+        }
+
+        function toggleSleepTimer() {
+            if (sleepTimeout) {
+                clearSleepTimer();
+            } else {
+                let timeLeft = 30 * 60;
+                timerBtn.classList.add('active');
+                
+                countdownInterval = setInterval(() => {
+                    timeLeft--;
+                    let mins = Math.floor(timeLeft / 60);
+                    let secs = timeLeft % 60;
+                    timerBtn.innerText = `Ends in ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                    if (timeLeft <= 0) closeHub();
+                }, 1000);
+
+                sleepTimeout = setTimeout(() => closeHub(), 30 * 60 * 1000);
+            }
+        }
+
+        function clearSleepTimer() {
+            clearTimeout(sleepTimeout);
+            clearInterval(countdownInterval);
+            sleepTimeout = null;
+            countdownInterval = null;
+            timerBtn.innerText = "Sleep Timer (Off)";
+            timerBtn.classList.remove('active');
+        }
+    </script>
+</body>
+</html>
+
+
 <!-- Elfsight YouTube Gallery | YouTube Gallery -->
 <script src="https://elfsightcdn.com/platform.js" async></script>
 <div class="elfsight-app-9d5e151d-5965-41b2-bc6a-8b0df27c1bc1" data-elfsight-app-lazy></div>
