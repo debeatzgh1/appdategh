@@ -166,12 +166,12 @@
         <div id="banner-ent" class="floating-banner banner-entertainment" style="display: none;">
             <div class="banner-text-slider">
                 <div class="slide-inner">
-                    <span style="color: var(--yt-red);">🎬 Productivity tools And Ai hub</span>
+                    <span style="color: var(--yt-red);">🎬 Entertainment and more</span>
                     <span style="color: var(--yt-red);">🎵 Stream Playlists</span>
                     <span style="color: var(--yt-red);">🔴 Live Updates</span>
                 </div>
             </div>
-            <button class="action-btn" style="background: var(--yt-red);" onclick="launch('https://appdategh.blogspot.com/', 'productivity hub')">Watch</button>
+            <button class="action-btn" style="background: var(--yt-red);" onclick="launch('https://appdategh.blogspot.com/', 'entertainment hub')">blog</button>
         </div>
 
         <div id="banner-ui" class="floating-banner banner-ui" style="display: none;">
