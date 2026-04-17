@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AppDateGH — Stream Hub</title>
+  <title>entertainment — Stream Hub</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root{ --bg:#071018; --panel:#0f1620; --muted:#93a1b2; --accent:#FF2D55; --glass: rgba(255,255,255,0.03); --card-radius:14px; }
     *{box-sizing:border-box}
-    html,body{height:100%; margin:0; font-family:Inter,system-ui,-apple-system; background:linear-gradient(180deg,#071018,#07141a); color:#e6eef6; overflow-x: hidden;}
+    html,body{height:95%; margin:0; font-family:Inter,system-ui,-apple-system; background:linear-gradient(180deg,#071018,#07141a); color:#e6eef6; overflow-x: hidden;}
     header{position:sticky; top:0; z-index:60; display:flex; gap:12px; align-items:center; padding:10px 16px; background:rgba(3,6,8,0.7); backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,255,255,0.05)}
     header img{height:40px; border-radius:8px}
     header h1{font-size:1rem; font-weight: 800; letter-spacing: -0.5px;}
     nav{margin-left:auto; display:flex; gap:15px; align-items:center}
     nav a{color:var(--muted); text-decoration:none; font-weight:600; font-size: 0.85rem; transition: 0.2s;}
     nav a:hover{color:var(--accent)}
-    main{display:grid; grid-template-columns: 1fr 340px; gap:18px; padding:20px; max-width:1000px; margin:0 auto; width:100%}
-    @media (max-width:940px){ main{grid-template-columns: 1fr; padding:12px} .sidebar{order:2} .player-wrap{order:1} }
+    main{display:grid; grid-template-columns: 1fr 340px; gap:18px; padding:20px; max-width:950px; margin:0 auto; width:100%}
+    @media (max-width:900px){ main{grid-template-columns: 1fr; padding:12px} .sidebar{order:2} .player-wrap{order:1} }
     .player-wrap{background:var(--panel); border-radius:var(--card-radius); padding:14px; box-shadow:0 8px 30px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03)}
     .player-frame{width:95%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; background:#000; display:flex; align-items:center; justify-content:center}
     .player-controls{display:flex; gap:10px; align-items:center; margin-top:12px; justify-content:space-between; flex-wrap: wrap;}
@@ -37,7 +37,7 @@
     .track.active{background:rgba(255,45,85,0.1); border-color:rgba(255,45,85,0.2)}
     .thumb{width:100px; height:56px; background:#111; border-radius:6px; flex-shrink:0; overflow:hidden;}
     .thumb img { width: 90%; height: 100%; object-fit: cover; }
-    .mini-player{position:fixed; right:18px; bottom:18px; z-index:100; width:340px; border-radius:16px; overflow:hidden; box-shadow:0 20px 40px rgba(0,0,0,0.8); border:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; gap:12px; padding:12px; background:#0f1620; transition:0.3s cubic-bezier(0.4, 0, 0.2, 1)}
+    .mini-player{position:fixed; right:18px; bottom:18px; z-index:100; width:300px; border-radius:16px; overflow:hidden; box-shadow:0 20px 40px rgba(0,0,0,0.8); border:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; gap:12px; padding:12px; background:#0f1620; transition:0.3s cubic-bezier(0.4, 0, 0.2, 1)}
     .mini-player.hidden{opacity:0; pointer-events:none; transform:translateY(30px) scale(0.95)}
     .mode-dock{position:fixed; left:50%; transform:translateX(-50%); bottom:20px; display:flex; gap:12px; z-index:80; background: rgba(0,0,0,0.5); padding: 8px 16px; border-radius: 100px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);}
     .dock-dot{width:16px; height:16px; border-radius:50%; cursor:pointer; transition: 0.2s;}
@@ -103,7 +103,7 @@
   <div id="miniPlayer" class="mini-player hidden">
     <div class="thumb" id="miniThumb"></div>
     <div style="flex:1; overflow: hidden;">
-      <div id="miniTitle" style="font-weight:800; font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">—</div>
+      <div id="miniTitle" style="font-weight:0; font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">—</div>
       <div class="small" id="miniChannel" style="font-size: 0.7rem;">—</div>
     </div>
     <button id="miniClose" class="btn" style="padding: 5px;"><i class="fa fa-times"></i></button>
