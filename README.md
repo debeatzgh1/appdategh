@@ -101,8 +101,8 @@
 </head>
 <body>
   <header>
-    <img src="https://debeatzgh.wordpress.com/wp-content/uploads/2025/08/createamoderntech-inspiredlogoforadigitalcontenthubcalledappdategh4933013559151235986.jpg" alt="AppDateGH Logo">
-    <h1>AppDateGH</h1>
+    <img src="https://debeatzgh.wordpress.com/wp-content/uploads/2026/01/gemini_generated_image_e3b3h0e3b3h0e3b38843226607488610379.png" alt="AppDateGH Logo">
+    <h1>E-hub</h1>
   </header>
 
   <nav>
