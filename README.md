@@ -15,10 +15,10 @@
     nav{margin-left:auto; display:flex; gap:15px; align-items:center}
     nav a{color:var(--muted); text-decoration:none; font-weight:600; font-size: 0.85rem; transition: 0.2s;}
     nav a:hover{color:var(--accent)}
-    main{display:grid; grid-template-columns: 1fr 360px; gap:18px; padding:20px; max-width:1200px; margin:0 auto; width:100%}
-    @media (max-width:980px){ main{grid-template-columns: 1fr; padding:12px} .sidebar{order:2} .player-wrap{order:1} }
+    main{display:grid; grid-template-columns: 1fr 340px; gap:18px; padding:20px; max-width:1000px; margin:0 auto; width:100%}
+    @media (max-width:940px){ main{grid-template-columns: 1fr; padding:12px} .sidebar{order:2} .player-wrap{order:1} }
     .player-wrap{background:var(--panel); border-radius:var(--card-radius); padding:14px; box-shadow:0 8px 30px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03)}
-    .player-frame{width:100%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; background:#000; display:flex; align-items:center; justify-content:center}
+    .player-frame{width:95%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; background:#000; display:flex; align-items:center; justify-content:center}
     .player-controls{display:flex; gap:10px; align-items:center; margin-top:12px; justify-content:space-between; flex-wrap: wrap;}
     .btn{background:var(--glass); border:1px solid rgba(255,255,255,0.06); padding:8px 12px; border-radius:12px; color:inherit; cursor:pointer; font-weight:700; display:inline-flex; align-items:center; gap:8px; transition: 0.2s;}
     .btn:hover{background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);}
