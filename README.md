@@ -1,639 +1,433 @@
-<!-- Custom Blogger Theme for AppDateGH with Dynamic Post Loading and Logo -->
 
+
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AppDateGH</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AppDateGH — Stream Hub</title>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+    :root{
+      --bg:#0b0f13; --panel:#0f1620; --muted:#93a1b2;
+      --accent:#FF2D55; --glass: rgba(255,255,255,0.03);
+      --card-radius:14px;
     }
-    body {
-      background: #f9f9f9;
-      color: #333;
-      line-height: 1.6;
-    }
-    header {
-      background: #000;
-      color: #fff;
-      padding: 1rem;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 999;
-    }
-    header img {
-      max-height: 60px;
-      margin-bottom: 0.5rem;
-    }
-    header h1 {
-      font-size: 1.5rem;
-    }
-    nav {
-      background: #fff;
-      display: flex;
-      justify-content: space-around;
-      padding: 0.5rem 0;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    nav a {
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-    }
-    .hero {
-      padding: 1rem;
-      text-align: center;
-      background: #e5e5e5;
-    }
-    .hero iframe {
-      width: 100%;
-      height: 220px;
-      border-radius: 10px;
-    }
-    .section {
-      padding: 1rem;
-    }
-    .section h2 {
-      margin-bottom: 0.5rem;
-    }
-    .card {
-      background: #fff;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-    .social-icons {
-      text-align: center;
-      padding: 1rem;
-    }
-    .social-icons a {
-      margin: 0 10px;
-      color: #333;
-      font-size: 1.5rem;
-    }
-    .fab-button {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: red;
-      color: #fff;
-      padding: 15px;
-      border-radius: 50%;
-      font-size: 1.5rem;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    }
-    footer {
-      background: #000;
-      color: #fff;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 1rem;
-    }
+    *{box-sizing:border-box}
+    html,body{height:100%; margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    body{background:linear-gradient(180deg,#071018 0%, #07141a 60%); color:#e6eef6; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; line-height:1.35;}
+    header{position:sticky; top:0; z-index:60; backdrop-filter: blur(6px); background: linear-gradient(180deg, rgba(3,6,8,0.6), rgba(3,6,8,0.35)); border-bottom:1px solid rgba(255,255,255,0.03); display:flex; align-items:center; gap:16px; padding:10px 16px;}
+    header img{height:44px; width:auto; border-radius:8px}
+    header h1{font-size:1.05rem; letter-spacing:0.6px}
+    nav{margin-left:auto; display:flex; gap:10px; align-items:center}
+    nav a{color:var(--muted); text-decoration:none; font-weight:600; font-size:0.9rem}
+    main{display:grid; grid-template-columns: 1fr 360px; gap:18px; padding:20px; max-width:1200px; margin:20px auto; width:calc(100% - 40px)}
+    @media (max-width:980px){ main{grid-template-columns: 1fr; padding:12px; width:calc(100% - 24px)} .sidebar{order:2} .player-wrap{order:1}}
+    .player-wrap{background:var(--panel); border-radius:var(--card-radius); padding:14px; box-shadow: 0 8px 30px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03)}
+    .player-frame{width:100%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; background:#000; display:flex; align-items:center; justify-content:center}
+    .player-controls{display:flex; gap:10px; align-items:center; margin-top:12px; justify-content:space-between}
+    .controls-left{display:flex; gap:8px; align-items:center}
+    .btn{background:var(--glass); border:1px solid rgba(255,255,255,0.04); padding:8px 12px; border-radius:12px; color:inherit; cursor:pointer; font-weight:700; display:inline-flex; align-items:center; gap:8px}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#ff6b7a); color:white; box-shadow:0 8px 30px rgba(255,45,85,0.08)}
+    .btn.icon{padding:8px; border-radius:10px}
+    .progress{height:6px; background:rgba(255,255,255,0.04); border-radius:999px; overflow:hidden; margin-top:10px}
+    .progress > i{display:block; height:100%; width:0%; background: linear-gradient(90deg,var(--accent),#ff6b7a)}
+    .meta{display:flex; flex-direction:column; gap:6px; margin-top:10px}
+    .title{font-weight:800; font-size:1.05rem}
+    .subtitle{color:var(--muted); font-size:0.85rem}
+
+    /* Sidebar */
+    .sidebar{background:transparent}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:12px; margin-bottom:14px; border:1px solid rgba(255,255,255,0.03)}
+    .playlist{display:flex; flex-direction:column; gap:8px; max-height:60vh; overflow:auto; padding-right:6px}
+    .track{display:flex; gap:10px; align-items:center; padding:8px; border-radius:10px; cursor:pointer; transition:0.15s; border:1px solid transparent}
+    .track:hover{background:rgba(255,255,255,0.02)}
+    .track.active{background:linear-gradient(90deg,rgba(255,45,85,0.08), rgba(255,107,122,0.03)); border-color:rgba(255,45,85,0.12)}
+    .thumb{width:110px;height:62px;background:#111;border-radius:6px;flex-shrink:0; display:flex; align-items:center; justify-content:center; color:var(--muted); font-weight:700}
+    .track .meta{margin:0}
+    .small{font-size:0.82rem;color:var(--muted)}
+
+    /* Floating mini player */
+    .mini-player{position:fixed; right:18px; bottom:18px; z-index:90; width:320px; border-radius:12px; overflow:hidden; box-shadow:0 30px 50px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.04); display:flex; align-items:center; gap:10px; padding:10px; background:linear-gradient(180deg,#071018, #071218); transform:translateY(0); transition:0.2s}
+    .mini-player.hidden{opacity:0; pointer-events:none; transform:translateY(16px)}
+    .mini-thumb{width:110px;height:62px;border-radius:8px;background:#000; display:flex;align-items:center;justify-content:center}
+    .mini-controls{display:flex; gap:8px; align-items:center}
+    .pill{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);font-weight:700}
+
+    /* Blog list */
+    .posts-list{display:flex; flex-direction:column; gap:10px}
+    .post-item{display:flex; gap:10px; align-items:center; padding:8px; border-radius:10px}
+    .post-thumb{width:80px;height:56px;background:#091018;border-radius:8px; flex-shrink:0}
+    .post-meta{display:flex; flex-direction:column; gap:4px}
+    .socials{display:flex; gap:10px; align-items:center}
+
+    footer{max-width:1200px;margin:20px auto;color:var(--muted); padding:20px; text-align:center; font-size:0.9rem}
+    .mode-dock{position:fixed; left:50%; transform:translateX(-50%); bottom:86px; display:flex; gap:8px; z-index:80}
+    .dock-dot{width:12px;height:12px;border-radius:50%; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,0.5)}
+    .dot-accent{background:var(--accent)} .dot-cyan{background:#00f2ff} .dot-green{background:#1DB954}
+    /* accessibility focus */
+    .btn:focus, .track:focus { outline:2px solid rgba(255,255,255,0.06); outline-offset:3px; }
+
+    /* scrollbars */
+    ::-webkit-scrollbar{height:10px;width:8px}
+    ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.04); border-radius:10px}
   </style>
 </head>
 <body>
-  <header>
-    <img src="https://debeatzgh.wordpress.com/wp-content/uploads/2026/01/gemini_generated_image_e3b3h0e3b3h0e3b38843226607488610379.png" alt="AppDateGH Logo">
-    <h1>E-hub</h1>
+
+  <header role="banner" aria-label="AppDateGH header">
+    <img src="https://debeatzgh.wordpress.com/wp-content/uploads/2026/01/gemini_generated_image_e3b3h0e3b3h0e3b38843226607488610379.png" alt="AppDateGH logo">
+    <h1>AppDateGH — E-hub</h1>
+    <nav role="navigation" aria-label="Primary">
+      <a href="#player">Player</a>
+      <a href="#blog">Blog</a>
+      <a href="#social">Social</a>
+    </nav>
   </header>
 
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#blog">Blog</a>
-    <a href="#videos">Videos</a>
-    <a href="#social">Social</a>
-  </nav>
+  <main>
+    <section class="player-wrap" id="player" aria-labelledby="player-title">
+      <div class="player-frame" id="player-frame" aria-live="polite">
+        <!-- YouTube IFrame is injected by the API -->
+        <div id="player-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted)">
+          Loading player…
+        </div>
+      </div>
 
-  <section class="hero">
-    <iframe src="https://www.youtube.com/embed/7nSr2P6blYM" frameborder="0" allowfullscreen></iframe>
-  </section>
+      <div class="progress" aria-hidden="true"><i id="seek-fill"></i></div>
 
-  <section id="videos" class="section">
-    <h2>Latest Videos</h2>
-    <div class="card"><iframe width="100%" height="180" src="https://www.youtube.com/embed/r1Fx0tqK5Z4" frameborder="0" allowfullscreen></iframe></div>
-    <div class="card"><iframe width="100%" height="180" src="https://www.youtube.com/embed/r2H51YxxEns" frameborder="0" allowfullscreen></iframe></div>
-    <div class="card"><iframe width="100%" height="180" src="https://www.youtube.com/embed/uPCftkZkUzI" frameborder="0" allowfullscreen></iframe></div>
-  </section>
+      <div class="player-controls" role="group" aria-label="Player controls">
+        <div class="controls-left">
+          <button id="playBtn" class="btn primary" aria-pressed="false"><i class="fa fa-play"></i><span class="small">Play</span></button>
+          <button id="prevBtn" class="btn icon" title="Previous (P)"><i class="fa fa-backward"></i></button>
+          <button id="nextBtn" class="btn icon" title="Next (N)"><i class="fa fa-forward"></i></button>
+          <button id="pipBtn" class="btn icon" title="Toggle Mini Player"><i class="fa fa-window-minimize"></i></button>
+          <button id="fsBtn" class="btn icon" title="Fullscreen"><i class="fa fa-expand"></i></button>
+        </div>
 
-  <section id="blog" class="section">
-    <h2>Latest Blog Posts</h2>
-    <div id="blog-posts"></div>
-  </section>
+        <div style="display:flex;gap:8px;align-items:center">
+          <select id="qualitySelect" class="btn" aria-label="Playback quality">
+            <option value="">Auto</option>
+            <option value="highres">1080p</option>
+            <option value="hd720">720p</option>
+            <option value="large">480p</option>
+            <option value="medium">360p</option>
+            <option value="small">240p</option>
+          </select>
+          <button id="muteBtn" class="btn icon" title="Mute (M)"><i class="fa fa-volume-up"></i></button>
+          <button id="sleepBtn" class="btn" title="Sleep timer">Sleep Off</button>
+        </div>
+      </div>
 
-  <section id="social" class="section">
-    <h2>Follow Us</h2>
-    <div class="social-icons">
-      <a href="https://www.instagram.com/debeatzgh" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.facebook.com/beatzde4" target="_blank"><i class="fab fa-facebook"></i></a>
+      <div class="meta" aria-hidden="false">
+        <div class="title" id="nowTitle">Loading playlist…</div>
+        <div class="subtitle" id="nowChannel">—</div>
+      </div>
+    </section>
+
+    <aside class="sidebar" aria-labelledby="sidebar-title">
+      <div class="card">
+        <h3 id="sidebar-title" style="margin:0 0 8px 0">Up Next</h3>
+        <div class="playlist" id="playlist" role="list" aria-label="Playlist"></div>
+      </div>
+
+      <div class="card" id="blog" style="max-height:36vh;overflow:auto;">
+        <h3 style="margin:0 0 8px 0">Latest Blog Posts</h3>
+        <div class="posts-list" id="blog-posts">Loading posts…</div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin:0 0 8px 0">Follow</h3>
+        <div class="socials">
+          <a class="btn" href="https://www.youtube.com/@debeatzgh" target="_blank" rel="noopener"><i class="fa fa-youtube"></i> YouTube</a>
+          <a class="btn" href="https://www.instagram.com/debeatzgh" target="_blank" rel="noopener"><i class="fa fa-instagram"></i> Instagram</a>
+          <a class="btn" href="https://www.facebook.com/beatzde4" target="_blank" rel="noopener"><i class="fa fa-facebook"></i> Facebook</a>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- mini player -->
+  <div id="miniPlayer" class="mini-player hidden" aria-hidden="true" role="dialog" aria-label="Mini player">
+    <div class="mini-thumb" id="miniThumb">VID</div>
+    <div style="flex:1">
+      <div id="miniTitle" style="font-weight:800;font-size:0.95rem">—</div>
+      <div class="small" id="miniChannel">—</div>
     </div>
-  </section>
+    <div class="mini-controls">
+      <button id="miniPrev" class="btn icon"><i class="fa fa-backward"></i></button>
+      <button id="miniPlay" class="btn icon"><i class="fa fa-play"></i></button>
+      <button id="miniNext" class="btn icon"><i class="fa fa-forward"></i></button>
+      <button id="miniClose" class="btn icon" title="Close"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
 
-  <a class="fab-button" href="https://www.youtube.com/@debeatzgh" target="_blank"><i class="fab fa-youtube"></i></a>
+  <div class="mode-dock" role="toolbar" aria-label="Theme modes">
+    <div class="dock-dot dot-accent" title="Default" onclick="applyAccent()"></div>
+    <div class="dock-dot dot-cyan" title="Cyan" onclick="applyCyan()"></div>
+    <div class="dock-dot dot-green" title="Spotify" onclick="applyGreen()"></div>
+  </div>
 
-  <footer>
-    <p>&copy; 2025 AppDateGH. All rights reserved.</p>
-  </footer>
+  <footer>&copy; 2026 AppDateGH — Stream-focused experience. Shortcuts: Space=Play/Pause, N=Next, P=Prev, M=Mute.</footer>
+
+  <!-- YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
-    // Load latest Blogger posts dynamically
-    const blogContainer = document.getElementById('blog-posts');
-    const blogFeed = '[https://appdategh.blogspot.com/feeds/posts/default?alt=json&max-results=4';
+    // Playlist config: add YouTube IDs and titles
+    const PLAYLIST = [
+      { id: '7nSr2P6blYM', title: 'Featured Video — AppDateGH', channel: 'AppDateGH' },
+      { id: 'r1Fx0tqK5Z4', title: 'Video 2 — Beats & Tips', channel: 'DebeatzGH' },
+      { id: 'r2H51YxxEns', title: 'Video 3 — Tutorials', channel: 'AppDateGH' },
+      { id: 'uPCftkZkUzI', title: 'Video 4 — Live Set', channel: 'DebeatzGH' }
+    ];
 
-    fetch(blogFeed)
-      .then(response => response.json())
-      .then(data => {
-        const entries = data.feed.entry;
-        let html = '';
+    let player, currentIndex = 0, isPlaying = false;
+    const playBtn = document.getElementById('playBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const pipBtn = document.getElementById('pipBtn');
+    const fsBtn = document.getElementById('fsBtn');
+    const muteBtn = document.getElementById('muteBtn');
+    const sleepBtn = document.getElementById('sleepBtn');
+    const qualitySelect = document.getElementById('qualitySelect');
+    const seekFill = document.getElementById('seek-fill');
+    const playlistEl = document.getElementById('playlist');
 
-        entries.forEach(entry => {
-          const title = entry.title.$t;
-          const link = entry.link.find(l => l.rel === 'alternate').href;
-          const content = entry.content.$t;
-          const snippet = content.replace(/<[^>]*>/g, '').substring(0, 100) + '...';
+    const mini = document.getElementById('miniPlayer');
+    const miniPlay = document.getElementById('miniPlay');
+    const miniPrev = document.getElementById('miniPrev');
+    const miniNext = document.getElementById('miniNext');
+    const miniClose = document.getElementById('miniClose');
 
-          html += `
-            <div class="card">
-              <h3><a href="${link}" target="_blank">${title}</a></h3>
-              <p>${snippet}</p>
-            </div>
-          `;
-        });
-
-        blogContainer.innerHTML = html;
-      })
-      .catch(err => {
-        blogContainer.innerHTML = '<p>Failed to load blog posts. Please try again later.</p>';
-        console.error(err);
+    // Render playlist
+    function renderPlaylist() {
+      playlistEl.innerHTML = '';
+      PLAYLIST.forEach((item, i) => {
+        const el = document.createElement('div');
+        el.className = 'track' + (i === currentIndex ? ' active' : '');
+        el.tabIndex = 0;
+        el.setAttribute('role','listitem');
+        el.innerHTML = `
+          <div class="thumb" aria-hidden="true"><img decoding="async" src="https://i.ytimg.com/vi/${item.id}/mqdefault.jpg" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:6px"></div>
+          <div style="flex:1">
+            <div style="font-weight:800">${item.title}</div>
+            <div class="small">${item.channel}</div>
+          </div>
+        `;
+        el.addEventListener('click', ()=> loadIndex(i));
+        el.addEventListener('keydown', (ev)=> { if(ev.key==='Enter') loadIndex(i); });
+        playlistEl.appendChild(el);
       });
+    }
+
+    // YouTube API ready
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player-frame', {
+        height: '100%',
+        width: '100%',
+        videoId: PLAYLIST[currentIndex].id,
+        playerVars: {
+          autoplay: 0,
+          controls: 1,
+          modestbranding: 1,
+          rel: 0,
+          enablejsapi: 1,
+          playsinline: 1
+        },
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onPlayerStateChange,
+          onError: (e)=> console.error('YT error', e)
+        }
+      });
+    }
+
+    function onPlayerReady() {
+      // move placeholder out since YT injects iframe
+      const ph = document.getElementById('player-placeholder');
+      if(ph) ph.remove();
+      updateNow();
+      renderPlaylist();
+      bindUI();
+      applyPersistedTheme();
+      // Restore last index
+      const saved = localStorage.getItem('appdate-current');
+      if(saved) { currentIndex = parseInt(saved,10) % PLAYLIST.length; player.loadVideoById(PLAYLIST[currentIndex].id); updateNow(); renderPlaylist(); }
+    }
+
+    function onPlayerStateChange(event) {
+      const state = event.data;
+      if(state === YT.PlayerState.PLAYING) { isPlaying=true; playBtn.innerHTML = '<i class="fa fa-pause"></i><span class="small">Pause</span>'; document.getElementById('playBtn').setAttribute('aria-pressed','true'); miniPlay.innerHTML='<i class="fa fa-pause"></i>'; }
+      else { isPlaying=false; playBtn.innerHTML = '<i class="fa fa-play"></i><span class="small">Play</span>'; document.getElementById('playBtn').setAttribute('aria-pressed','false'); miniPlay.innerHTML='<i class="fa fa-play"></i>'; }
+      if(state === YT.PlayerState.ENDED) { nextIndex(); }
+      // update progress
+      if(state === YT.PlayerState.PLAYING) startProgress(); else stopProgress();
+    }
+
+    // progress updater
+    let progressTimer = null;
+    function startProgress(){
+      stopProgress();
+      progressTimer = setInterval(()=> {
+        if(!player || !player.getDuration) return;
+        const d = player.getDuration();
+        if(d>0) {
+          const cur = player.getCurrentTime();
+          const pct = Math.min(100, (cur/d)*100);
+          seekFill.style.width = pct + '%';
+        }
+      }, 600);
+    }
+    function stopProgress(){ if(progressTimer) { clearInterval(progressTimer); progressTimer=null; } }
+
+    // Controls
+    function togglePlay() {
+      if(!player) return;
+      const state = player.getPlayerState();
+      if(state === YT.PlayerState.PLAYING) player.pauseVideo(); else player.playVideo();
+    }
+    function prevIndex() {
+      currentIndex = (currentIndex - 1 + PLAYLIST.length) % PLAYLIST.length;
+      loadIndex(currentIndex);
+    }
+    function nextIndex() {
+      currentIndex = (currentIndex + 1) % PLAYLIST.length;
+      loadIndex(currentIndex);
+    }
+    function loadIndex(i) {
+      currentIndex = i;
+      localStorage.setItem('appdate-current', currentIndex);
+      player.loadVideoById(PLAYLIST[currentIndex].id);
+      updateNow();
+      renderPlaylist();
+    }
+    function updateNow() {
+      const cur = PLAYLIST[currentIndex];
+      document.getElementById('nowTitle').textContent = cur.title;
+      document.getElementById('nowChannel').textContent = cur.channel;
+      document.getElementById('miniTitle').textContent = cur.title;
+      document.getElementById('miniChannel').textContent = cur.channel;
+      document.getElementById('miniThumb').innerHTML = `<img decoding="async" src="https://i.ytimg.com/vi/${cur.id}/mqdefault.jpg" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:6px">`;
+      // update active class on playlist
+      renderPlaylist();
+    }
+
+    // UI binding
+    function bindUI(){
+      playBtn.addEventListener('click', togglePlay);
+      prevBtn.addEventListener('click', prevIndex);
+      nextBtn.addEventListener('click', nextIndex);
+      pipBtn.addEventListener('click', toggleMiniMode);
+      fsBtn.addEventListener('click', ()=> {
+        const iframe = player.getIframe();
+        if(document.fullscreenElement) document.exitFullscreen(); else iframe.requestFullscreen().catch(()=>{});
+      });
+      muteBtn.addEventListener('click', ()=> {
+        if(player.isMuted()) { player.unMute(); muteBtn.innerHTML='<i class="fa fa-volume-up"></i>'; } else { player.mute(); muteBtn.innerHTML='<i class="fa fa-volume-mute"></i>'; }
+      });
+      qualitySelect.addEventListener('change', ()=> {
+        const val = qualitySelect.value;
+        if(!val) player.setPlaybackQuality('default'); else player.setPlaybackQuality(val);
+      });
+
+      miniPlay.addEventListener('click', ()=> { togglePlay(); });
+      miniPrev.addEventListener('click', prevIndex);
+      miniNext.addEventListener('click', nextIndex);
+      miniClose.addEventListener('click', ()=> { hideMiniMode(); });
+
+      // keyboard shortcuts
+      window.addEventListener('keydown', (e)=>{
+        if(['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+        if(e.code === 'Space') { e.preventDefault(); togglePlay(); }
+        if(e.key === 'n' || e.key === 'N') nextIndex();
+        if(e.key === 'p' || e.key === 'P') prevIndex();
+        if(e.key === 'm' || e.key === 'M') muteBtn.click();
+        if(e.key === 'ArrowUp') { const v = Math.min(100, (player.getVolume()||50)+5); player.setVolume(v); }
+        if(e.key === 'ArrowDown') { const v = Math.max(0, (player.getVolume()||50)-5); player.setVolume(v); }
+      });
+    }
+
+    // Mini player (pin) behavior
+    function toggleMiniMode(){
+      const isHidden = mini.classList.contains('hidden');
+      if(isHidden) showMiniMode(); else hideMiniMode();
+    }
+    function showMiniMode(){
+      mini.classList.remove('hidden'); mini.setAttribute('aria-hidden','false');
+      // ensure player keeps playing in background; we don't swap iframe due to cross-origin
+    }
+    function hideMiniMode(){
+      mini.classList.add('hidden'); mini.setAttribute('aria-hidden','true');
+    }
+
+    // Sleep timer
+    let sleepTimer = null, sleepRemaining = 0, sleepInterval = null;
+    sleepBtn.addEventListener('click', ()=> {
+      if(sleepTimer){ clearSleepTimer(); } else startSleepTimer(15); // default 15 minutes
+    });
+    function startSleepTimer(minutes){
+      sleepRemaining = minutes*60;
+      sleepBtn.textContent = `Sleep ${minutes}m`;
+      sleepTimer = setTimeout(()=> { player.pauseVideo(); clearSleepTimer(); }, sleepRemaining*1000);
+      sleepInterval = setInterval(()=> {
+        sleepRemaining--; if(sleepRemaining<=0) clearSleepTimer();
+        sleepBtn.textContent = `Ends ${Math.ceil(sleepRemaining/60)}m`;
+      },1000);
+    }
+    function clearSleepTimer(){
+      clearTimeout(sleepTimer); clearInterval(sleepInterval); sleepTimer = null; sleepInterval=null;
+      sleepBtn.textContent = 'Sleep Off';
+    }
+
+    // Quality - try to set, but YouTube may return available qualities
+    // Theme & color dock
+    function applyAccent(){ document.documentElement.style.setProperty('--accent','#FF2D55'); document.documentElement.style.setProperty('--brand-glow','rgba(255,45,85,0.1)'); localStorage.setItem('app-theme','accent'); }
+    function applyCyan(){ document.documentElement.style.setProperty('--accent','#00f2ff'); document.documentElement.style.setProperty('--brand-glow','rgba(0,242,255,0.08)'); localStorage.setItem('app-theme','cyan'); }
+    function applyGreen(){ document.documentElement.style.setProperty('--accent','#1DB954'); document.documentElement.style.setProperty('--brand-glow','rgba(29,185,84,0.06)'); localStorage.setItem('app-theme','green'); }
+    function applyPersistedTheme(){ const t=localStorage.getItem('app-theme')||'accent'; if(t==='cyan') applyCyan(); else if(t==='green') applyGreen(); else applyAccent(); }
+
+    // Blog fetching (fixed feed URL). Using Blogger JSON feed
+    (function loadBlog(){
+      const blogPosts = document.getElementById('blog-posts');
+      const blogFeed = 'https://appdategh.blogspot.com/feeds/posts/default?alt=json&max-results=4';
+      fetch(blogFeed).then(r=>r.ok? r.json(): Promise.reject(r)).then(data=>{
+        const entries = data.feed && data.feed.entry ? data.feed.entry : [];
+        if(!entries.length) { blogPosts.innerHTML = '<div class="small">No posts found.</div>'; return; }
+        blogPosts.innerHTML = '';
+        entries.forEach(e=>{
+          const title = e.title.$t || 'Untitled';
+          const link = (e.link || []).find(l=>l.rel==='alternate')?.href || '#';
+          const snippet = (e.content && e.content.$t ? e.content.$t : (e.summary && e.summary.$t ? e.summary.$t : '')).replace(/<[^>]*>/g,'').slice(0,120) + '…';
+          const thumb = (e.media$thumbnail && e.media$thumbnail.url) || 'https://via.placeholder.com/160x90?text=Post';
+          const item = document.createElement('a');
+          item.className = 'post-item';
+          item.href = link; item.target = '_blank'; item.rel='noopener';
+          item.innerHTML = `<div class="post-thumb"><img decoding="async" src="${thumb}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px"></div>
+            <div class="post-meta"><strong>${title}</strong><div class="small">${snippet}</div></div>`;
+          blogPosts.appendChild(item);
+        });
+      }).catch(err=>{
+        blogPosts.innerHTML = '<div class="small">Failed to load posts. Try again later.</div>';
+        console.error('Blog fetch error', err);
+      });
+    })();
+
+    // Persist / hydration
+    window.addEventListener('beforeunload', ()=> {
+      localStorage.setItem('appdate-current', currentIndex);
+    });
+
+    // UI helpers for interop with YT
+    // When YT injects iframe into 'player-frame', it replaces content — but we referenced its element ID
+    // Because we pass 'player-frame' as the element ID above, YT will create the <iframe> in that container.
+    // The placeholder was removed on ready.
+
+    // Expose a simple API for manual testing
+    window.appdate = { loadIndex, nextIndex, prevIndex, togglePlay };
+
   </script>
 </body>
 </html>
-
-
-
-
-
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Debeatzgh Ultimate Ecosystem</title>
-    <style>
-        :root {
-            --yt-red: #FF0000;
-            --spotify-green: #1DB954;
-            --cyber-cyan: #00f2ff;
-            --deep-pink: #FF1493;
-            --bg-dark: #0d1117;
-            --glass: rgba(15, 15, 15, 0.9);
-        }
-
-        body { 
-            margin: 0; 
-            font-family: 'Inter', system-ui, -apple-system, sans-serif; 
-            background: var(--bg-dark); 
-            color: white;
-            overflow-x: hidden;
-        }
-
-        /* --- GLOBAL TOP BANNER SYSTEM --- */
-        .master-banner-container {
-            position: fixed;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .floating-banner {
-            width: 350px;
-            height: 52px;
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 6px 0 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        /* --- THEMES --- */
-        .banner-productivity { border-color: var(--deep-pink); box-shadow: 0 0 15px rgba(255, 20, 147, 0.3); }
-        .banner-entertainment { border-color: var(--yt-red); box-shadow: 0 0 15px rgba(255, 0, 0, 0.3); }
-        .banner-ui { border-color: var(--cyber-cyan); box-shadow: 0 0 15px rgba(0, 242, 255, 0.3); }
-
-        .banner-text-slider {
-            flex: 1;
-            height: 20px;
-            overflow: hidden;
-            margin-right: 10px;
-        }
-
-        .slide-inner {
-            display: flex;
-            flex-direction: column;
-            animation: verticalSlide 6s infinite;
-        }
-
-        .slide-inner span {
-            height: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            white-space: nowrap;
-        }
-
-        @keyframes verticalSlide {
-            0%, 25% { transform: translateY(0); }
-            33%, 58% { transform: translateY(-20px); }
-            66%, 91% { transform: translateY(-40px); }
-            100% { transform: translateY(0); }
-        }
-
-        /* --- BUTTONS --- */
-        .action-btn {
-            padding: 8px 18px;
-            border-radius: 50px;
-            border: none;
-            color: white;
-            font-weight: 900;
-            font-size: 0.7rem;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        /* --- IFRAME OVERLAY --- */
-        #master-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.97);
-            z-index: 20000;
-            display: none;
-            flex-direction: column;
-        }
-
-        .overlay-header {
-            height: 60px;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #111;
-            border-bottom: 2px solid #333;
-        }
-
-        #master-frame { width: 100%; flex-grow: 1; border: none; background: white; }
-
-        /* --- SMART TOGGLE DOCK --- */
-        .mode-dock {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--glass);
-            padding: 8px;
-            border-radius: 20px;
-            display: flex;
-            gap: 10px;
-            border: 1px solid rgba(255,255,255,0.1);
-            z-index: 9999;
-        }
-
-        .dock-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .dot-pink { background: var(--deep-pink); }
-        .dot-red { background: var(--yt-red); }
-        .dot-cyan { background: var(--cyber-cyan); }
-        .dock-dot:hover { transform: scale(1.4); }
-
-    </style>
-</head>
-<body>
-
-    <div class="master-banner-container">
-        
-        <div id="banner-prod" class="floating-banner banner-productivity">
-            <div class="banner-text-slider">
-                <div class="slide-inner">
-                    <span style="color: var(--deep-pink);">🚀 Lifestyle Productivity</span>
-                    <span style="color: var(--deep-pink);">💡 Tools & Ideas</span>
-                    <span style="color: var(--deep-pink);">📈 All in one place!</span>
-                </div>
-            </div>
-            <button class="action-btn" style="background: var(--deep-pink);" onclick="launch('https://appdategh.blogspot.com/', 'Productivity Hub')">Open Hub</button>
-        </div>
-
-        <div id="banner-ent" class="floating-banner banner-entertainment" style="display: none;">
-            <div class="banner-text-slider">
-                <div class="slide-inner">
-                    <span style="color: var(--yt-red);">🎬 Entertainment and more</span>
-                    <span style="color: var(--yt-red);">🎵 Stream Playlists</span>
-                    <span style="color: var(--yt-red);">🔴 Live Updates</span>
-                </div>
-            </div>
-            <button class="action-btn" style="background: var(--yt-red);" onclick="launch('https://appdategh.blogspot.com/', 'entertainment hub')">blog</button>
-        </div>
-
-        <div id="banner-ui" class="floating-banner banner-ui" style="display: none;">
-            <div class="banner-text-slider">
-                <div class="slide-inner">
-                    <span style="color: var(--cyber-cyan);">🖥️ Browse UI & Interfaces</span>
-                    <span style="color: var(--cyber-cyan);">🎨 Modern Styling</span>
-                    <span style="color: var(--cyber-cyan);">📂 Design Systems</span>
-                </div>
-            </div>
-            <button class="action-btn" style="background: var(--cyber-cyan); color: #000;" onclick="launch('https://debeatzgh1.github.io/me-/', 'UI Portfolio')">Explore</button>
-        </div>
-
-    </div>
-
-    <div id="master-overlay">
-        <div class="overlay-header" id="overlay-header-bar">
-            <span id="overlay-title" style="font-weight: bold; text-transform: uppercase; font-size: 0.8rem;">Resource View</span>
-            <div style="display:flex; gap: 10px;">
-                <button onclick="closeOverlay()" style="background: #444; color: white; border: none; padding: 6px 15px; border-radius: 4px; cursor: pointer;">Close</button>
-            </div>
-        </div>
-        <iframe id="master-frame" src=""></iframe>
-    </div>
-
-    <div class="mode-dock">
-        <div class="dock-dot dot-pink" title="Productivity Mode" onclick="switchMode('prod')"></div>
-        <div class="dock-dot dot-red" title="Entertainment Mode" onclick="switchMode('ent')"></div>
-        <div class="dock-dot dot-cyan" title="UI/UX Mode" onclick="switchMode('ui')"></div>
-    </div>
-
-    <script>
-        const banners = {
-            prod: document.getElementById('banner-prod'),
-            ent: document.getElementById('banner-ent'),
-            ui: document.getElementById('banner-ui')
-        };
-
-        const overlay = document.getElementById('master-overlay');
-        const frame = document.getElementById('master-frame');
-        const header = document.getElementById('overlay-header-bar');
-
-        // Switch Banner Modes
-        function switchMode(mode) {
-            Object.values(banners).forEach(b => b.style.display = 'none');
-            banners[mode].style.display = 'flex';
-            // Save preference
-            localStorage.setItem('master-mode', mode);
-        }
-
-        // Launch Iframe
-        function launch(url, title) {
-            document.getElementById('overlay-title').innerText = title;
-            frame.src = url;
-            overlay.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-
-            // Change header color based on active mode
-            const activeMode = localStorage.getItem('master-mode');
-            const colors = { prod: '#FF1493', ent: '#FF0000', ui: '#00f2ff' };
-            header.style.borderBottomColor = colors[activeMode];
-        }
-
-        function closeOverlay() {
-            overlay.style.display = 'none';
-            frame.src = '';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Load saved mode or default to prod
-        window.onload = () => {
-            const saved = localStorage.getItem('master-mode') || 'prod';
-            switchMode(saved);
-        };
-    </script>
-
-</body>
-</html>
-
-
-
-
-
-
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        :root {
-            --brand-color: #FF0000;
-            --brand-glow: rgba(255, 0, 0, 0.5);
-            --glass: rgba(15, 15, 15, 0.95);
-            --bg-dark: #0d1117;
-        }
-
-        [data-theme="spotify"] {
-            --brand-color: #1DB954;
-            --brand-glow: rgba(29, 185, 84, 0.5);
-        }
-
-        body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: var(--bg-dark); color: white; transition: background 0.3s; }
-
-        /* --- FLOATING BANNER --- */
-        .ehub-banner {
-            position: fixed;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 340px;
-            height: 52px;
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 6px 0 15px;
-            z-index: 9999;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px var(--brand-glow);
-            cursor: pointer;
-            transition: 0.3s ease;
-        }
-
-        .brand-icon { width: 30px; height: 30px; background: var(--brand-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
-        .play-tri { width: 0; height: 0; border-top: 6px solid transparent; border-left: 9px solid white; border-bottom: 6px solid transparent; margin-left: 2px; }
-
-        /* --- HUB CONTAINER --- */
-        #hub-container {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.98);
-            display: none;
-            flex-direction: column;
-            z-index: 10000;
-        }
-
-        #hub-container.mini {
-            inset: auto; right: 20px; bottom: 20px;
-            width: 320px; height: 200px;
-            border-radius: 16px; border: 2px solid var(--brand-color);
-            box-shadow: 0 20px 50px rgba(0,0,0,1);
-        }
-
-        .hub-header {
-            height: 60px;
-            background: #111;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 15px;
-            border-bottom: 1px solid #333;
-        }
-
-        .controls { display: flex; gap: 8px; align-items: center; }
-
-        .btn {
-            border: none; color: white; padding: 6px 12px; border-radius: 6px;
-            cursor: pointer; font-size: 0.75rem; font-weight: bold;
-        }
-
-        .btn-timer { background: #333; border: 1px solid #555; }
-        .btn-timer.active { border-color: var(--brand-color); color: var(--brand-color); }
-        .btn-min { background: #444; }
-        .btn-close { background: var(--brand-color); }
-
-        #ehub-frame { width: 100%; flex-grow: 1; border: none; background: #000; }
-        .live-dot { width: 8px; height: 8px; background: var(--brand-color); border-radius: 50%; animation: pulse 1.5s infinite; margin-left: 8px; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-    </style>
-</head>
-<body data-theme="youtube">
-
-    <div class="ehub-banner" onclick="openHub()">
-        <div style="display:flex; align-items:center;">
-            <div class="brand-icon"><div class="play-tri"></div></div>
-            <span style="color:white; margin-left:10px; font-weight:800; font-size:0.8rem;">E-HUB PLAYER</span>
-            <div class="live-dot"></div>
-        </div>
-        <button style="background:var(--brand-color); color:white; border:none; border-radius:20px; padding:8px 18px; font-size:0.7rem; font-weight:bold; cursor:pointer;">LAUNCH</button>
-    </div>
-
-    <div id="hub-container">
-        <div class="hub-header">
-            <div class="controls">
-                <button class="btn btn-timer" id="timerBtn" onclick="toggleSleepTimer()">Sleep Timer (Off)</button>
-                <button class="btn" style="background:#222;" onclick="toggleTheme()">Theme</button>
-            </div>
-            
-            <div class="controls">
-                <button class="btn btn-min" id="minBtn" onclick="toggleMini()">Minimize</button>
-                <button class="btn btn-close" onclick="closeHub()">✕</button>
-            </div>
-        </div>
-        <iframe id="ehub-frame" src=""></iframe>
-    </div>
-
-    <script>
-        const container = document.getElementById('hub-container');
-        const frame = document.getElementById('ehub-frame');
-        const minBtn = document.getElementById('minBtn');
-        const timerBtn = document.getElementById('timerBtn');
-        let sleepTimeout = null;
-        let countdownInterval = null;
-
-        // --- PERSISTENCE LOGIC ---
-        window.onload = () => {
-            const savedTheme = localStorage.getItem('ehub-theme') || 'youtube';
-            document.body.setAttribute('data-theme', savedTheme);
-        };
-
-        function openHub() {
-            if (container.classList.contains('mini')) {
-                toggleMini();
-            } else {
-                frame.src = "https://debeatzgh1.github.io/E-Hub-/";
-                container.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function toggleTheme() {
-            const body = document.body;
-            const newTheme = body.getAttribute('data-theme') === 'youtube' ? 'spotify' : 'youtube';
-            body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('ehub-theme', newTheme);
-        }
-
-        function toggleMini() {
-            const isMini = container.classList.toggle('mini');
-            minBtn.innerText = isMini ? "Maximize" : "Minimize";
-            document.body.style.overflow = isMini ? 'auto' : 'hidden';
-        }
-
-        function closeHub() {
-            container.style.display = 'none';
-            container.classList.remove('mini');
-            frame.src = "";
-            document.body.style.overflow = 'auto';
-            clearSleepTimer();
-        }
-
-        function toggleSleepTimer() {
-            if (sleepTimeout) {
-                clearSleepTimer();
-            } else {
-                let timeLeft = 30 * 60;
-                timerBtn.classList.add('active');
-                
-                countdownInterval = setInterval(() => {
-                    timeLeft--;
-                    let mins = Math.floor(timeLeft / 60);
-                    let secs = timeLeft % 60;
-                    timerBtn.innerText = `Ends in ${mins}:${secs < 10 ? '0' : ''}${secs}`;
-                    if (timeLeft <= 0) closeHub();
-                }, 1000);
-
-                sleepTimeout = setTimeout(() => closeHub(), 30 * 60 * 1000);
-            }
-        }
-
-        function clearSleepTimer() {
-            clearTimeout(sleepTimeout);
-            clearInterval(countdownInterval);
-            sleepTimeout = null;
-            countdownInterval = null;
-            timerBtn.innerText = "Sleep Timer (Off)";
-            timerBtn.classList.remove('active');
-        }
-    </script>
-</body>
-</html>
-
-
-<!-- Elfsight YouTube Gallery | YouTube Gallery -->
-<script src="https://elfsightcdn.com/platform.js" async></script>
-<div class="elfsight-app-9d5e151d-5965-41b2-bc6a-8b0df27c1bc1" data-elfsight-app-lazy></div>
-
-
