@@ -15,7 +15,7 @@
     nav{margin-left:auto; display:flex; gap:15px; align-items:center}
     nav a{color:var(--muted); text-decoration:none; font-weight:600; font-size: 0.85rem; transition: 0.2s;}
     nav a:hover{color:var(--accent)}
-    main{display:grid; grid-template-columns: 1fr 300px; gap:18px; padding:20px; max-width:100px; margin:0 auto; width:100%}
+    main{display:grid; grid-template-columns: 1fr 320px; gap:18px; padding:20px; max-width:110px; margin:0 auto; width:100%}
     @media (max-width:900px){ main{grid-template-columns: 1fr; padding:12px} .sidebar{order:2} .player-wrap{order:1} }
     .player-wrap{background:var(--panel); border-radius:var(--card-radius); padding:14px; box-shadow:0 8px 30px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03)}
     .player-frame{width:95%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; background:#000; display:flex; align-items:center; justify-content:center}
@@ -52,7 +52,7 @@
     <h1> E-hub</h1>
     <nav>
       <a href="#player">Player</a>
-      <a href="https://beatzde4.blogspot.com" target="_blank">Blog</a>
+      <a href="https://appdategh.blogspot.com" target="_blank">Blog</a>
       <a href="https://www.youtube.com/@debeatzgh" target="_blank">YouTube</a>
     </nav>
   </header>
@@ -148,7 +148,7 @@
 
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player-frame', {
-            height: '100%', width: '100%',
+            height: '100%', width: '110%',
             videoId: PLAYLIST[currentIndex].id,
             playerVars: { 'autoplay': 0, 'rel': 0, 'modestbranding': 1, 'playsinline': 1 },
             events: { 
