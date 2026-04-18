@@ -15,7 +15,7 @@
     nav{margin-left:auto; display:flex; gap:15px; align-items:center}
     nav a{color:var(--muted); text-decoration:none; font-weight:600; font-size: 0.85rem; transition: 0.2s;}
     nav a:hover{color:var(--accent)}
-    main{display:grid; grid-template-columns: 1fr 340px; gap:18px; padding:20px; max-width:950px; margin:0 auto; width:100%}
+    main{display:grid; grid-template-columns: 1fr 300px; gap:18px; padding:20px; max-width:100px; margin:0 auto; width:100%}
     @media (max-width:900px){ main{grid-template-columns: 1fr; padding:12px} .sidebar{order:2} .player-wrap{order:1} }
     .player-wrap{background:var(--panel); border-radius:var(--card-radius); padding:14px; box-shadow:0 8px 30px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03)}
     .player-frame{width:95%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; background:#000; display:flex; align-items:center; justify-content:center}
@@ -29,7 +29,7 @@
     .title{font-weight:800; font-size:1.1rem; margin-bottom: 4px}
     .subtitle{color:var(--muted); font-size:0.85rem}
     .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:15px; margin-bottom:14px; border:1px solid rgba(255,255,255,0.03)}
-    .playlist{display:flex; flex-direction:column; gap:8px; max-height:450px; overflow-y:auto; padding-right:5px}
+    .playlist{display:flex; flex-direction:column; gap:8px; max-height:400px; overflow-y:auto; padding-right:5px}
     .playlist::-webkit-scrollbar { width: 4px; }
     .playlist::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
     .track{display:flex; gap:12px; align-items:center; padding:10px; border-radius:10px; cursor:pointer; transition:0.15s; border:1px solid transparent}
@@ -49,7 +49,7 @@
 
   <header>
     <img src="https://debeatzgh.wordpress.com/wp-content/uploads/2026/01/gemini_generated_image_e3b3h0e3b3h0e3b38843226607488610379.png" alt="AppDateGH logo">
-    <h1>AppDateGH — E-hub</h1>
+    <h1> E-hub</h1>
     <nav>
       <a href="#player">Player</a>
       <a href="https://beatzde4.blogspot.com" target="_blank">Blog</a>
