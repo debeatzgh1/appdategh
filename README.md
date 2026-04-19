@@ -39,7 +39,7 @@
     .thumb img { width: 90%; height: 100%; object-fit: cover; }
     .mini-player{position:fixed; right:18px; bottom:18px; z-index:100; width:300px; border-radius:16px; overflow:hidden; box-shadow:0 20px 40px rgba(0,0,0,0.8); border:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; gap:12px; padding:12px; background:#0f1620; transition:0.3s cubic-bezier(0.4, 0, 0.2, 1)}
     .mini-player.hidden{opacity:0; pointer-events:none; transform:translateY(30px) scale(0.95)}
-    .mode-dock{position:fixed; left:70%; transform:translateX(-50%); bottom:20px; display:flex; gap:12px; z-index:80; background: rgba(0,0,0,0.5); padding: 8px 16px; border-radius: 100px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);}
+    .mode-dock{position:fixed; left:20%; transform:translateX(-50%); bottom:20px; display:flex; gap:12px; z-index:80; background: rgba(0,0,0,0.5); padding: 8px 16px; border-radius: 100px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);}
     .dock-dot{width:16px; height:16px; border-radius:50%; cursor:pointer; transition: 0.2s;}
     .dock-dot:hover { transform: scale(1.2); }
     .dot-accent{background:var(--accent)} .dot-cyan{background:#00f2ff} .dot-green{background:#1DB954}
