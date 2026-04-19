@@ -1,4 +1,4 @@
-<!doctype html>
+
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -117,7 +117,7 @@
     <div class="dock-dot dot-green" onclick="setTheme('green')" title="Green theme"></div>
   </div>
 
-  <footer>&copy; 2026 AppDateGH — Stream-focused experience. Shortcuts: Space=Play/Pause, N=Next, P=Prev, M=Mute.</footer>
+  <footer>&copy; 2026 Ehub — Stream-focused experience. Shortcuts:.</footer>
 
   <script src="https://www.youtube.com/iframe_api"></script>
 
