@@ -9,7 +9,7 @@
     :root{ --bg:#071018; --panel:#0f1620; --muted:#93a1b2; --accent:#FF2D55; --glass: rgba(255,255,255,0.03); --card-radius:12px; }
     *{box-sizing:border-box}
     html,body{height:95%; margin:0; font-family:Inter,system-ui,-apple-system; background:linear-gradient(180deg,#071018,#07141a); color:#e6eef6; overflow-x: hidden;}
-    header{position:sticky; top:0; z-index:60; display:flex; gap:12px; align-items:center; padding:10px 16px; background:rgba(3,6,8,0.7); backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,255,255,0.05)}
+    header{position:sticky; top:0; z-index:60; display:flex; gap:12px; align-items: left; padding:10px 16px; background:rgba(3,6,8,0.7); backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,255,255,0.05)}
     header img{height:40px; border-radius:8px}
     header h1{font-size:1rem; font-weight: 800; letter-spacing: -0.5px;}
     nav{margin-left:auto; display:flex; gap:15px; align-items:center}
@@ -18,8 +18,8 @@
     main{display:grid; grid-template-columns: 1fr 320px; gap:18px; padding:20px; max-width:100px; margin:0 auto; width:100%}
     @media (max-width:700px){ main{grid-template-columns: 1fr; padding:12px} .sidebar{order:2} .player-wrap{order:1} }
     .player-wrap{background:var(--panel); border-radius:var(--card-radius); padding:14px; box-shadow:0 8px 30px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03)}
-    .player-frame{width:85%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; background:#000; display:flex; align-items:left; justify-content:center}
-    .player-controls{display:flex; gap:10px; align-items:center; margin-top:12px; justify-content:space-between; flex-wrap: wrap;}
+    .player-frame{width:85%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; background:#000; display:flex; align-items:left; justify-content: left}
+    .player-controls{display:flex; gap:10px; align-items: left; margin-top:12px; justify-content:space-between; flex-wrap: wrap;}
     .btn{background:var(--glass); border:1px solid rgba(255,255,255,0.06); padding:8px 12px; border-radius:12px; color:inherit; cursor:pointer; font-weight:600; display:inline-flex; align-items:center; gap:8px; transition: 0.2s;}
     .btn:hover{background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);}
     .btn.primary{background:linear-gradient(90deg,var(--accent),#ff6b7a); color:white; border:none;}
