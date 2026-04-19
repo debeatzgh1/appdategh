@@ -17,7 +17,7 @@
     .player-wrap{background:var(--panel); border-radius:var(--card-radius); padding:14px; box-shadow:0 8px 30px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03)}
     /* ensure the player occupies the left column fully */
     .player-frame{width:100%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; background:#000; display:flex; align-items:center; justify-content:center}
-    .player-controls{display:flex; gap:10px; align-items:center; margin-top:12px; justify-content:space-between; flex-wrap:wrap;}
+    .player-controls{display:flex; gap:10px; align-items:center; margin-top:14px; justify-content:space-between; flex-wrap:wrap;}
     .btn{background:var(--glass); border:1px solid rgba(255,255,255,0.06); padding:8px 12px; border-radius:12px; color:inherit; cursor:pointer; font-weight:600; display:inline-flex; align-items:center; gap:8px; transition: 0.2s;}
     .btn:hover{background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12);}
     .btn.primary{background:linear-gradient(90deg,var(--accent),#ff6b7a); color:white; border:none;}
