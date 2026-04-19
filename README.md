@@ -18,7 +18,7 @@
     main{display:grid; grid-template-columns: 1fr 320px; gap:18px; padding:20px; max-width:100px; margin:0 auto; width:100%}
     @media (max-width:600px){ main{grid-template-columns: 1fr; padding:12px} .sidebar{order:2} .player-wrap{order:1} }
     .player-wrap{background:var(--panel); border-radius:var(--card-radius); padding:14px; box-shadow:0 8px 30px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03)}
-    .player-frame{width:55%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; background:#000; display:flex; align-items: right; justify-content: right}
+    .player-frame{width:50%; aspect-ratio:16/9; border-radius:10px; overflow:hidden; background:#000; display:flex; align-items: right; justify-content: right}
     .player-controls{display:flex; gap:10px; align-items: right; margin-top:12px; justify-content:space-between; flex-wrap: wrap;}
     .btn{background:var(--glass); border:1px solid rgba(255,255,255,0.06); padding:8px 12px; border-radius:12px; color:inherit; cursor:pointer; font-weight:600; display:inline-flex; align-items:center; gap:8px; transition: 0.2s;}
     .btn:hover{background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);}
