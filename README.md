@@ -95,7 +95,7 @@
         <!-- Continuous Global Ticker Feed -->
         <div class="carousel-container">
             <div class="carousel-track">
-                <span class="carousel-item">🔥 Live on Ehub by DeBeatzGH: Streaming the Ultimate Top 10 Countdown charts directly to your network dashboard</span>
+                <span class="carousel-item">🔥 Live on Ehub by DeBeatzGH: Streaming UI Top 10 Countdown charts directly to your network dashboard for playlisters: 0549757544</span>
                 <span class="carousel-item">⚡ Entertainment Hub: Access creative media files, artist logs, and interactive modules curated natively for creators</span>
             </div>
         </div>
