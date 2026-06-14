@@ -1,159 +1,136 @@
 <style>
-/* 1. RESET & VARIABLES */
-:root {
-  --dd-bg: #1a1c1e; /* Deep Dark */
-  --dd-text: #f0f6fc;
-  --dd-accent: #1877F2; /* Facebook Blue */
-  --dd-border: rgba(240, 246, 252, 0.1);
-  --dd-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
+    :root {
+        /* Light Mode Variables */
+        --banner-bg: rgba(255, 255, 255, 0.85);
+        --banner-text: #0f172a;
+        --page-bg: #f8fafc;
+        --accent: #d946ef; /* Bright Entertainment Neon Magenta */
+        --glass-border: rgba(15, 23, 42, 0.08);
+    }
 
-/* 2. MAIN CONTAINER (SLIM-FIT & FLOATING) */
-.dd-banner-container {
-  position: fixed;
-  bottom: 10px; /* Slight offset for modern float */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 92%;
-  max-width: 900px;
-  height: 40px; /* Slim height */
-  background-color: var(--dd-bg);
-  background-image: radial-gradient(at 10% 10%, rgba(24, 119, 242, 0.15) 0px, transparent 50%),
-                    radial-gradient(at 90% 90%, rgba(240, 246, 252, 0.05) 0px, transparent 50%);
-  border: 1px solid var(--dd-border);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 10px 0 15px;
-  z-index: 999999; /* Ensure topmost */
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-  overflow: hidden;
-  transition: all 0.3s ease;
-  font-family: var(--dd-font);
-}
+    [data-theme="dark"] {
+        /* Dark Mode Variables */
+        --banner-bg: rgba(15, 23, 42, 0.85);
+        --banner-text: #f8fafc;
+        --page-bg: #090d16;
+        --glass-border: rgba(255, 255, 255, 0.08);
+    }
 
-.dd-banner-container:hover {
-  border-color: var(--dd-accent);
-  box-shadow: 0 10px 30px rgba(24, 119, 242, 0.2);
-  transform: translateX(-50%) translateY(-2px);
-}
+    body {
+        margin: 0;
+        padding-top: 32px; /* Perfectly matches slimmer banner height */
+        background-color: var(--page-bg);
+        transition: background 0.3s ease;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
 
-/* 3. LEFT SECTION (BRAND & SLIDER) */
-.dd-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 1;
-  overflow: hidden;
-}
+    /* Fixed Top Banner Grid */
+    .top-banner {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 32px;
+        background: var(--banner-bg);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--glass-border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+        z-index: 10005;
+        box-sizing: border-box;
+        color: var(--banner-text);
+        user-select: none;
+    }
 
-.dd-brand {
-  color: var(--dd-accent);
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-}
+    /* Infinite Marquee Architecture */
+    .carousel-container {
+        flex-grow: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+        margin: 0 20px;
+        mask-image: linear-gradient(to right, transparent, #000 20px, #000 calc(100% - 20px), transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 20px, #000 calc(100% - 20px), transparent);
+    }
 
-/* AUTO-SLIDE TEXT LOGIC */
-.dd-slider-box {
-  flex: 1;
-  height: 20px;
-  overflow: hidden;
-  position: relative;
-}
+    .carousel-track {
+        display: inline-block;
+        padding-left: 100%;
+        animation: scroll-text 25s linear infinite;
+    }
 
-.dd-slider-content {
-  display: flex;
-  flex-direction: column;
-  animation: ddTextSlide 12s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
-}
+    .carousel-item {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        padding-right: 60px;
+    }
 
-.dd-slider-content span {
-  height: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--dd-text);
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-}
+    @keyframes scroll-text {
+        0% { transform: translate3d(0, 0, 0); }
+        100% { transform: translate3d(-100%, 0, 0); }
+    }
 
-.dd-highlight { color: var(--dd-accent); font-weight: 800; }
+    /* Micro Theme Toggle Button */
+    .theme-toggle {
+        cursor: pointer;
+        background: var(--glass-border);
+        border: 1px solid var(--glass-border);
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        transition: transform 0.2s ease, border-color 0.2s ease;
+    }
 
-@keyframes ddTextSlide {
-  0%, 20% { transform: translateY(0); }             /* Intro */
-  25%, 45% { transform: translateY(-20px); }        /* Recommend 1 */
-  50%, 70% { transform: translateY(-40px); }        /* Recommend 2 */
-  75%, 95% { transform: translateY(-60px); }        /* Action */
-  100% { transform: translateY(0); }                /* Reset loop */
-}
-
-/* 4. RIGHT SECTION (ACTION BUTTON) */
-.dd-right {
-  display: flex;
-  align-items: center;
-}
-
-.dd-join-btn {
-  background-color: var(--dd-accent);
-  color: #ffffff;
-  border: none;
-  padding: 5px 12px;
-  border-radius: 6px;
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  text-decoration: none;
-}
-
-.dd-join-btn:hover {
-  background-color: #ffffff;
-  color: #1877F2;
-  transform: scale(1.05);
-}
-
-/* 5. MOBILE OPTIMIZATION */
-@media (max-width: 600px) {
-  .dd-banner-container { width: 96%; top: 5px; height: 36px; padding: 0 8px; }
-  .dd-brand { font-size: 14px; }
-  .dd-slider-content span { font-size: 9px; }
-  .dd-join-btn { padding: 4px 8px; font-size: 9px; }
-  .dd-btn-text { display: none; } /* Show only icon on mobile */
-  .dd-join-btn i { font-size: 12px; margin: 0; }
-}
+    .theme-toggle:hover {
+        border-color: var(--accent);
+        transform: scale(1.05);
+    }
 </style>
 
-<div class='dd-banner-container'>
-  <div class='dd-left'>
-    <div class='dd-brand'>
-      <i class='fab fa-facebook-square'></i>
-    </div>
-    <div class='dd-slider-box'>
-      <div class='dd-slider-content'>
-        <span>Official Community: <strong class='dd-highlight'>&quot;Digital Dynamo&quot;</strong></span>
-        <span>Recommended: Amplify our tech insights in the group.</span>
-        <span>Deepen the discussion: Join the <strong class='dd-highlight'>Dynamo</strong> network.</span>
-        <span>Action Required: Tap &#39;Join Group&#39; to connect live.</span>
-      </div>
-    </div>
-  </div>
-  <div class='dd-right'>
-    <a class='dd-join-btn' href='https://facebook.com/groups/1024060211323777/' target='_blank'>
-      <i class='fas fa-users'></i> <span class='dd-btn-text'>Join Group</span>
-    </a>
-  </div>
-</div>
+<header class="top-banner">
+    <!-- Brand Mark Identifier -->
+    <span style="font-weight: 900; font-size: 0.8rem; letter-spacing: -0.5px; color: var(--accent);">Ehub.</span>
 
-<script src='https://kit.fontawesome.com/0f6c123a31.js' crossorigin='anonymous'></script>
+    <!-- Continuous News Stream -->
+    <div class="carousel-container">
+        <div class="carousel-track">
+            <span class="carousel-item">🔥 Live on Ehub by DeBeatzGH: Streaming the Ultimate Top 10 Countdown charts directly to your network dashboard</span>
+            <span class="carousel-item">⚡ Entertainment Hub: Access creative media files, artist logs, and interactive modules curated natively for creators</span>
+        </div>
+    </div>
+
+    <!-- Micro-engineered Toggler UI Link -->
+    <div class="theme-toggle" onclick="toggleTheme()" id="theme-btn" title="Toggle UI Palette">
+        ☀️
+    </div>
+</header>
+
+<script>
+    function toggleTheme() {
+        const docNode = document.documentElement;
+        const btn = document.getElementById('theme-btn');
+
+        if (docNode.getAttribute('data-theme') === 'dark') {
+            docNode.removeAttribute('data-theme');
+            btn.innerHTML = '🌙';
+        } else {
+            docNode.setAttribute('data-theme', 'dark');
+            btn.innerHTML = '☀️';
+        }
+    }
+
+    // Default configuration initializes structural Dark Workspace variables immediately
+    document.documentElement.setAttribute('data-theme', 'dark');
+</script>
 
 
 
