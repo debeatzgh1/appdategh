@@ -1,132 +1,159 @@
 <style>
-        :root {
-            /* Light Mode Variables */
-            --banner-bg: rgba(255, 255, 255, 0.8);
-            --banner-text: #1e293b;
-            --page-bg: #f8fafc;
-            --accent: #3b82f6;
-            --glass-border: rgba(0, 0, 0, 0.1);
-        }
+/* 1. RESET & VARIABLES */
+:root {
+  --dd-bg: #1a1c1e; /* Deep Dark */
+  --dd-text: #f0f6fc;
+  --dd-accent: #1877F2; /* Facebook Blue */
+  --dd-border: rgba(240, 246, 252, 0.1);
+  --dd-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
 
-        [data-theme="dark"] {
-            /* Dark Mode Variables */
-            --banner-bg: rgba(15, 23, 42, 0.9);
-            --banner-text: #f1f5f9;
-            --page-bg: #0f172a;
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
+/* 2. MAIN CONTAINER (SLIM-FIT & FLOATING) */
+.dd-banner-container {
+  position: fixed;
+  bottom: 10px; /* Slight offset for modern float */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 900px;
+  height: 40px; /* Slim height */
+  background-color: var(--dd-bg);
+  background-image: radial-gradient(at 10% 10%, rgba(24, 119, 242, 0.15) 0px, transparent 50%),
+                    radial-gradient(at 90% 90%, rgba(240, 246, 252, 0.05) 0px, transparent 50%);
+  border: 1px solid var(--dd-border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 0 15px;
+  z-index: 999999; /* Ensure topmost */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  font-family: var(--dd-font);
+}
 
-        body {
-            margin: 0;
-            padding-top: 50px; /* Space for fixed banner */
-            background-color: var(--page-bg);
-            transition: background 0.3s ease;
-            font-family: 'Inter', system-ui, sans-serif;
-        }
+.dd-banner-container:hover {
+  border-color: var(--dd-accent);
+  box-shadow: 0 10px 30px rgba(24, 119, 242, 0.2);
+  transform: translateX(-50%) translateY(-2px);
+}
 
-        /* Top Banner */
-        .top-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 45px;
-            background: var(--banner-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--glass-border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            z-index: 10005;
-            box-sizing: border-box;
-            color: var(--banner-text);
-        }
+/* 3. LEFT SECTION (BRAND & SLIDER) */
+.dd-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  overflow: hidden;
+}
 
-        /* Auto Carousel */
-        .carousel-container {
-            flex-grow: 1;
-            overflow: hidden;
-            white-space: nowrap;
-            position: relative;
-            margin: 0 40px;
-        }
+.dd-brand {
+  color: var(--dd-accent);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
 
-        .carousel-track {
-            display: inline-block;
-            animation: scroll-text 20s linear infinite;
-        }
+/* AUTO-SLIDE TEXT LOGIC */
+.dd-slider-box {
+  flex: 1;
+  height: 20px;
+  overflow: hidden;
+  position: relative;
+}
 
-        .carousel-item {
-            display: inline-block;
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            padding-right: 50px; /* Space between loops */
-        }
+.dd-slider-content {
+  display: flex;
+  flex-direction: column;
+  animation: ddTextSlide 12s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+}
 
-        @keyframes scroll-text {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
-        }
+.dd-slider-content span {
+  height: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--dd-text);
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
 
-        /* Dark Mode Toggle */
-        .theme-toggle {
-            cursor: pointer;
-            background: var(--glass-border);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 4px 12px;
-            font-size: 0.75rem;
-            color: var(--banner-text);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s;
-        }
+.dd-highlight { color: var(--dd-accent); font-weight: 800; }
 
-        .theme-toggle:hover {
-            border-color: var(--accent);
-        }
-    </style>
+@keyframes ddTextSlide {
+  0%, 20% { transform: translateY(0); }             /* Intro */
+  25%, 45% { transform: translateY(-20px); }        /* Recommend 1 */
+  50%, 70% { transform: translateY(-40px); }        /* Recommend 2 */
+  75%, 95% { transform: translateY(-60px); }        /* Action */
+  100% { transform: translateY(0); }                /* Reset loop */
+}
 
+/* 4. RIGHT SECTION (ACTION BUTTON) */
+.dd-right {
+  display: flex;
+  align-items: center;
+}
 
+.dd-join-btn {
+  background-color: var(--dd-accent);
+  color: #ffffff;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
 
-    <header class="top-banner">
-        <span style="font-weight: 800; font-size: 1rem; color: var(--accent);">D.</span>
+.dd-join-btn:hover {
+  background-color: #ffffff;
+  color: #1877F2;
+  transform: scale(1.05);
+}
 
-        <div class="carousel-container">
-            <div class="carousel-track">
-                <span class="carousel-item">The Ultimate Top 10 on Ehub• </span>
-                <span class="carousel-item">Widgets, tools, templates & creative resources for Bloggers, Creators & Developers • </span>
-            </div>
-        </div>
+/* 5. MOBILE OPTIMIZATION */
+@media (max-width: 600px) {
+  .dd-banner-container { width: 96%; top: 5px; height: 36px; padding: 0 8px; }
+  .dd-brand { font-size: 14px; }
+  .dd-slider-content span { font-size: 9px; }
+  .dd-join-btn { padding: 4px 8px; font-size: 9px; }
+  .dd-btn-text { display: none; } /* Show only icon on mobile */
+  .dd-join-btn i { font-size: 12px; margin: 0; }
+}
+</style>
 
-        <div class="theme-toggle" onclick="toggleTheme()" id="theme-btn">
-            <span id="theme-icon">🌙</span> Dark Mode
-        </div>
-    </header>
+<div class='dd-banner-container'>
+  <div class='dd-left'>
+    <div class='dd-brand'>
+      <i class='fab fa-facebook-square'></i>
+    </div>
+    <div class='dd-slider-box'>
+      <div class='dd-slider-content'>
+        <span>Official Community: <strong class='dd-highlight'>&quot;Digital Dynamo&quot;</strong></span>
+        <span>Recommended: Amplify our tech insights in the group.</span>
+        <span>Deepen the discussion: Join the <strong class='dd-highlight'>Dynamo</strong> network.</span>
+        <span>Action Required: Tap &#39;Join Group&#39; to connect live.</span>
+      </div>
+    </div>
+  </div>
+  <div class='dd-right'>
+    <a class='dd-join-btn' href='https://facebook.com/groups/1024060211323777/' target='_blank'>
+      <i class='fas fa-users'></i> <span class='dd-btn-text'>Join Group</span>
+    </a>
+  </div>
+</div>
 
-    <script>
-        function toggleTheme() {
-            const body = document.documentElement;
-            const btn = document.getElementById('theme-btn');
-            const icon = document.getElementById('theme-icon');
-
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.removeAttribute('data-theme');
-                btn.innerHTML = '🌙 Dark Mode';
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                btn.innerHTML = '☀️ Light Mode';
-            }
-        }
-
-        // Set dark mode as default based on your preference
-        document.documentElement.setAttribute('data-theme', 'dark');
-        document.getElementById('theme-btn').innerHTML = '☀️ Light Mode';
-    </script>
+<script src='https://kit.fontawesome.com/0f6c123a31.js' crossorigin='anonymous'></script>
 
 
 
