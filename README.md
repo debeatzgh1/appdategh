@@ -1,9 +1,3 @@
-
-
-
-
-Side Hustle Floating Hub
-
 <style>
 body{
   margin:0;
