@@ -1,3 +1,6 @@
+Here is the updated code. The banner has been pinned safely to the **bottom** of the viewport, and the layout padding has been inverted from the top of the body to the **bottom** to protect your page content from getting covered.
+
+```html
 <style>
     :root {
         /* Light Mode Variables */
@@ -18,23 +21,23 @@
 
     body {
         margin: 0;
-        padding-top: 32px; /* Perfectly matches slimmer banner height */
+        padding-bottom: 32px; /* Changed to bottom to match the new banner position */
         background-color: var(--page-bg);
         transition: background 0.3s ease;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
-    /* Fixed Top Banner Grid */
-    .top-banner {
+    /* Fixed Bottom Banner Grid */
+    .bottom-banner {
         position: fixed;
-        top: 0;
+        bottom: 0; /* Changed from top: 0 to lock at the bottom */
         left: 0;
         width: 100%;
         height: 32px;
         background: var(--banner-bg);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
-        border-bottom: 1px solid var(--glass-border);
+        border-top: 1px solid var(--glass-border); /* Border moved to top of bar */
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -96,7 +99,7 @@
     }
 </style>
 
-<header class="top-banner">
+<header class="bottom-banner">
     <!-- Brand Mark Identifier -->
     <span style="font-weight: 900; font-size: 0.8rem; letter-spacing: -0.5px; color: var(--accent);">Ehub.</span>
 
@@ -131,6 +134,8 @@
     // Default configuration initializes structural Dark Workspace variables immediately
     document.documentElement.setAttribute('data-theme', 'dark');
 </script>
+
+```
 
 
 
