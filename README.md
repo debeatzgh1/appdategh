@@ -1,146 +1,145 @@
-```html
-<style>
-    :root {
-        /* Light Mode Variables */
-        --banner-bg: rgba(255, 255, 255, 0.85);
-        --banner-text: #0f172a;
-        --page-bg: #f8fafc;
-        --accent: #d946ef; /* Bright Entertainment Neon Magenta */
-        --glass-border: rgba(15, 23, 42, 0.08);
-    }
-
-    [data-theme="dark"] {
-        /* Dark Mode Variables */
-        --banner-bg: rgba(15, 23, 42, 0.85);
-        --banner-text: #f8fafc;
-        --page-bg: #090d16;
-        --glass-border: rgba(255, 255, 255, 0.08);
-    }
-
-    body {
-        margin: 0;
-        padding-bottom: 32px; /* Changed to bottom to match the new banner position */
-        background-color: var(--page-bg);
-        transition: background 0.3s ease;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    /* Fixed Bottom Banner Grid */
-    .bottom-banner {
-        position: fixed;
-        bottom: 0; /* Changed from top: 0 to lock at the bottom */
-        left: 0;
-        width: 100%;
-        height: 32px;
-        background: var(--banner-bg);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border-top: 1px solid var(--glass-border); /* Border moved to top of bar */
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 12px;
-        z-index: 10005;
-        box-sizing: border-box;
-        color: var(--banner-text);
-        user-select: none;
-    }
-
-    /* Infinite Marquee Architecture */
-    .carousel-container {
-        flex-grow: 1;
-        overflow: hidden;
-        white-space: nowrap;
-        position: relative;
-        margin: 0 20px;
-        mask-image: linear-gradient(to right, transparent, #000 20px, #000 calc(100% - 20px), transparent);
-        -webkit-mask-image: linear-gradient(to right, transparent, #000 20px, #000 calc(100% - 20px), transparent);
-    }
-
-    .carousel-track {
-        display: inline-block;
-        padding-left: 100%;
-        animation: scroll-text 25s linear infinite;
-    }
-
-    .carousel-item {
-        display: inline-block;
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.3px;
-        padding-right: 60px;
-    }
-
-    @keyframes scroll-text {
-        0% { transform: translate3d(0, 0, 0); }
-        100% { transform: translate3d(-100%, 0, 0); }
-    }
-
-    /* Micro Theme Toggle Button */
-    .theme-toggle {
-        cursor: pointer;
-        background: var(--glass-border);
-        border: 1px solid var(--glass-border);
-        border-radius: 50%;
-        width: 22px;
-        height: 22px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.75rem;
-        transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .theme-toggle:hover {
-        border-color: var(--accent);
-        transform: scale(1.05);
-    }
-</style>
-
-<header class="bottom-banner">
-    <!-- Brand Mark Identifier -->
-    <span style="font-weight: 900; font-size: 0.8rem; letter-spacing: -0.5px; color: var(--accent);">Ehub.</span>
-
-    <!-- Continuous News Stream -->
-    <div class="carousel-container">
-        <div class="carousel-track">
-            <span class="carousel-item">🔥 Live on Ehub by DeBeatzGH: Streaming the Ultimate Top 10 Countdown charts directly to your network dashboard</span>
-            <span class="carousel-item">⚡ Entertainment Hub: Access creative media files, artist logs, and interactive modules curated natively for creators</span>
-        </div>
-    </div>
-
-    <!-- Micro-engineered Toggler UI Link -->
-    <div class="theme-toggle" onclick="toggleTheme()" id="theme-btn" title="Toggle UI Palette">
-        ☀️
-    </div>
-</header>
-
-<script>
-    function toggleTheme() {
-        const docNode = document.documentElement;
-        const btn = document.getElementById('theme-btn');
-
-        if (docNode.getAttribute('data-theme') === 'dark') {
-            docNode.removeAttribute('data-theme');
-            btn.innerHTML = '🌙';
-        } else {
-            docNode.setAttribute('data-theme', 'dark');
-            btn.innerHTML = '☀️';
+<!-- Ehub System Footer Banner Engine -->
+<div id="ehub-footer-frame">
+    <style>
+        #ehub-footer-frame {
+            --dbz-banner-bg: rgba(255, 255, 255, 0.85);
+            --dbz-banner-text: #0f172a;
+            --dbz-accent: #d946ef;
+            --dbz-glass-border: rgba(15, 23, 42, 0.08);
         }
-    }
 
-    // Default configuration initializes structural Dark Workspace variables immediately
-    document.documentElement.setAttribute('data-theme', 'dark');
-</script>
+        html[data-theme="dark"] #ehub-footer-frame {
+            --dbz-banner-bg: rgba(15, 23, 42, 0.85);
+            --dbz-banner-text: #f8fafc;
+            --dbz-glass-border: rgba(255, 255, 255, 0.08);
+        }
 
-```
+        /* Fixed Bottom Layout Configuration */
+        #ehub-footer-frame .bottom-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 32px;
+            background: var(--dbz-banner-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-top: 1px solid var(--dbz-glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 12px;
+            z-index: 2147483647; /* Maximum z-index depth to ensure visibility over complex layouts */
+            box-sizing: border-box;
+            color: var(--dbz-banner-text);
+            user-select: none;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
 
+        /* Infinite Cinematic Text Ticker */
+        #ehub-footer-frame .carousel-container {
+            flex-grow: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            margin: 0 20px;
+            mask-image: linear-gradient(to right, transparent, #000 20px, #000 calc(100% - 20px), transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 20px, #000 calc(100% - 20px), transparent);
+        }
+
+        #ehub-footer-frame .carousel-track {
+            display: inline-block;
+            padding-left: 100%;
+            animation: dbzMarqueeScroll 25s linear infinite;
+        }
+
+        #ehub-footer-frame .carousel-item {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            padding-right: 60px;
+        }
+
+        @keyframes dbzMarqueeScroll {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        /* Micro UI Theme Selector Button */
+        #ehub-footer-frame .theme-toggle {
+            cursor: pointer;
+            background: var(--dbz-glass-border);
+            border: 1px solid var(--dbz-glass-border);
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        #ehub-footer-frame .theme-toggle:hover {
+            border-color: var(--dbz-accent);
+            transform: scale(1.05);
+        }
+    </style>
+
+    <footer class="bottom-banner">
+        <!-- Structural Entertainment Identifier -->
+        <span style="font-weight: 900; font-size: 0.8rem; letter-spacing: -0.5px; color: var(--dbz-accent);">Ehub.</span>
+
+        <!-- Continuous Global Ticker Feed -->
+        <div class="carousel-container">
+            <div class="carousel-track">
+                <span class="carousel-item">🔥 Live on Ehub by DeBeatzGH: Streaming the Ultimate Top 10 Countdown charts directly to your network dashboard</span>
+                <span class="carousel-item">⚡ Entertainment Hub: Access creative media files, artist logs, and interactive modules curated natively for creators</span>
+            </div>
+        </div>
+
+        <!-- Micro UI Toggler Switch -->
+        <div class="theme-toggle" onclick="toggleEhubTheme()" id="ehub-theme-btn" title="Toggle UI Palette">
+            ☀️
+        </div>
+    </footer>
+
+    <script>
+        function toggleEhubTheme() {
+            const rootNode = document.documentElement;
+            const toggleButton = document.getElementById('ehub-theme-btn');
+
+            if (rootNode.getAttribute('data-theme') === 'dark') {
+                rootNode.removeAttribute('data-theme');
+                toggleButton.innerHTML = '🌙';
+            } else {
+                rootNode.setAttribute('data-theme', 'dark');
+                toggleButton.innerHTML = '☀️';
+            }
+        }
+
+        // Initialize and safely allocate baseline layout space for the custom banner
+        document.addEventListener('DOMContentLoaded', () => {
+            // Apply default dark workspace theme parameters cleanly
+            if (!document.documentElement.hasAttribute('data-theme')) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+            
+            // Adjust body runtime properties to counter overlap risks smoothly
+            const dynamicSpacing = parseFloat(window.getComputedStyle(document.body).paddingBottom) || 0;
+            document.body.style.paddingBottom = (dynamicSpacing + 32) + 'px';
+        });
+    </script>
+</div>
 
 
 
 <!-- Elfsight Announcement Bar | Ads -->
 <script src="https://elfsightcdn.com/platform.js" async></script>
 <div class="elfsight-app-da4c4e26-f1fe-4865-98e5-07ab2384d659" data-elfsight-app-lazy></div>
+
 <html lang="en">
 <head>
   <meta charset="utf-8" />
