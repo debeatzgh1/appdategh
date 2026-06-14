@@ -1,3 +1,164 @@
+<script>
+(function(){
+
+/* ================= CONFIG ================= */
+const DBZ_HOME = "https://9d5e151d596541b2bc6a8b0df27c1bc1.elf.site";
+const BTN_SIZE = 36; // Shrunk down from 52px to a mini size
+const BTN_COLOR = "#0f2a44";
+
+/* ================= STYLES ================= */
+const css = `
+#dbz-btn{
+  position:fixed;
+  right:16px;
+  top:60%;
+  transform:translateY(-50%);
+  width:${BTN_SIZE}px;
+  height:${BTN_SIZE}px;
+  border-radius:50%;
+  background:${BTN_COLOR};
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px; /* Adjusted icon font-size to look good in 36px space */
+  cursor:pointer;
+  z-index:999999;
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+  animation:dbzPulse 1.6s infinite;
+  font-family: system-ui, sans-serif;
+}
+@keyframes dbzPulse{
+  0%,100%{transform:translateY(-50%) scale(1)}
+  50%{transform:translateY(-50%) scale(1.06)}
+}
+
+#dbz-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.3); /* Lightened backdrop so users can see the left screen */
+  backdrop-filter:blur(3px);
+  display:none;
+  z-index:999998;
+}
+
+/* Positions Frame strictly from the middle right corner */
+#dbz-box{
+  position:absolute;
+  right:10px;
+  bottom:20px;
+
+  width:300px;
+  height:30vh;
+
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+#dbz-bar{
+  background:${BTN_COLOR};
+  color:#fff;
+  padding:6px 12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:13px;
+  user-select:none;
+}
+
+#dbz-bar button{
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:14px;
+  cursor:pointer;
+  margin-left:4px;
+  opacity:0.85;
+  transition:opacity 0.2s;
+}
+
+#dbz-bar button:hover{
+  opacity:1;
+}
+`;
+const style = document.createElement("style");
+style.innerHTML = css;
+document.head.appendChild(style);
+
+/* ================= HTML ================= */
+const html = `
+<div id="dbz-btn" title="Open Debeatzgh Hub">☰</div>
+
+<div id="dbz-overlay">
+  <div id="dbz-box">
+    <div id="dbz-bar">
+      <div>
+        <button id="dbz-back" title="Back">⟵</button>
+        <button id="dbz-forward" title="Forward">⟶</button>
+      </div>
+      <div style="font-family:system-ui,sans-serif;font-weight:600;font-size:11px;letter-spacing:0.5px;">DEBEATZGH</div>
+      <div>
+        <button id="dbz-full" title="Fullscreen">⛶</button>
+        <button id="dbz-close" title="Close">✕</button>
+      </div>
+    </div>
+    <iframe id="dbz-frame" style="flex:1;border:none;background:#fff;"></iframe>
+  </div>
+</div>
+`;
+document.body.insertAdjacentHTML("beforeend", html);
+
+/* ================= LOGIC ================= */
+const btn = document.getElementById("dbz-btn");
+const overlay = document.getElementById("dbz-overlay");
+const frame = document.getElementById("dbz-frame");
+const box = document.getElementById("dbz-box");
+
+btn.onclick = ()=>{
+  frame.src = DBZ_HOME;
+  overlay.style.display = "block";
+};
+
+// Close when clicking the 'X' button
+document.getElementById("dbz-close").onclick = ()=>{
+  overlay.style.display = "none";
+  frame.src = "";
+  if(document.fullscreenElement) document.exitFullscreen();
+};
+
+// Close when clicking outside the box frame area
+overlay.onclick = (e)=>{
+  if(e.target === overlay){
+    overlay.style.display = "none";
+    frame.src = "";
+  }
+};
+
+document.getElementById("dbz-back").onclick = ()=>{
+  try{frame.contentWindow.history.back()}catch(e){}
+};
+
+document.getElementById("dbz-forward").onclick = ()=>{
+  try{frame.contentWindow.history.forward()}catch(e){}
+};
+
+document.getElementById("dbz-full").onclick = ()=>{
+  if(!document.fullscreenElement){
+    box.requestFullscreen();
+  }else{
+    document.exitFullscreen();
+  }
+};
+
+})();
+</script>
+
+
+
+
 <!-- Ehub System Footer Banner Engine -->
 <div id="ehub-footer-frame">
     <style>
