@@ -1,4 +1,4 @@
-Here is the updated code. The banner has been pinned safely to the **bottom** of the viewport, and the layout padding has been inverted from the top of the body to the **bottom** to protect your page content from getting covered.
+Updates banner has been pinned safely to the **bottom** of the viewport, and the layout padding has been inverted from the top of the body to the **bottom** to protect your page content from getting covered.
 
 ```html
 <style>
