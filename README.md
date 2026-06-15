@@ -65,7 +65,7 @@ body{
 }
 
 iframe{
-  width:35%;
+  width:100%;
   height:40%;
   border:none;
 }
