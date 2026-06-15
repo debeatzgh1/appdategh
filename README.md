@@ -1,3 +1,234 @@
+<!-- Ehub Entertainment Popup Animation Component -->
+<script>
+(function(){
+/* ================= CONFIGURATION ================= */
+const PLAYLIST_URL = "https://youtube.com/playlist?list=PLMOQxjh_hNfRbNjMEMpG_wBsf4NODJGEG&si=PLkvwUiB8-tXCzrJ";
+// Using the first video or clean embed conversion for high-performance background mapping
+const EMBED_PLAYER_URL = "https://www.youtube.com/embed/videoseries?list=PLMOQxjh_hNfRbNjMEMpG_wBsf4NODJGEG";
+
+/* ================= DYNAMIC STYLES ================= */
+const css = `
+#ehub-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 10, 16, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2147483647; /* Ensure it stays above all appdategh layouts */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#ehub-popup-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#ehub-popup-card {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(217, 70, 239, 0.25); /* Glowing Neon border matching Ehub brand colors */
+    border-radius: 24px;
+    width: 100%;
+    max-width: 500px;
+    transform: scale(0.85) translateY(20px);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 50px rgba(217, 70, 239, 0.15), 0 25px 60px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    position: relative;
+}
+
+#ehub-popup-overlay.active #ehub-popup-card {
+    transform: scale(1) translateY(0);
+}
+
+/* Header Branding */
+.ehub-pop-header {
+    padding: 16px 24px;
+    background: linear-gradient(90deg, rgba(217,70,239,0.1) 0%, rgba(59,130,246,0.1) 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ehub-brand-title {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 900;
+    font-size: 1.2rem;
+    letter-spacing: -0.5px;
+    background: linear-gradient(45deg, #d946ef, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ehub-close-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #94a3b8;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+.ehub-close-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* Content Frame */
+.ehub-pop-body {
+    padding: 24px;
+    text-align: center;
+    color: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.ehub-pop-subtitle {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #d946ef;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.ehub-pop-main-text {
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 16px;
+    color: #ffffff;
+}
+
+/* Built-in Video Frame Preview Container */
+.ehub-media-wrapper {
+    width: 100%;
+    height: 150px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #090d16;
+    margin-bottom: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* CTA Action Button */
+.ehub-cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #d946ef 0%, #3b82f6 100%);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(217, 70, 239, 0.3);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.ehub-cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(217, 70, 239, 0.45);
+    filter: brightness(1.1);
+}
+
+.ehub-cta-button span {
+    margin-left: 8px;
+    font-size: 0.85rem;
+    transition: transform 0.2s ease;
+}
+.ehub-cta-button:hover span {
+    transform: translateX(3px);
+}
+`;
+
+const style = document.createElement("style");
+style.innerHTML = css;
+document.head.appendChild(style);
+
+/* ================= NODE INJECTION ================= */
+const html = `
+<div id="ehub-popup-overlay">
+    <div id="ehub-popup-card">
+        <div class="ehub-pop-header">
+            <div class="ehub-brand-title">Ehub by DeBeatzGH</div>
+            <button class="ehub-close-btn" id="ehub-pop-close" title="Close Workspace">✕</button>
+        </div>
+        <div class="ehub-pop-body">
+            <div class="ehub-pop-subtitle">Now Streaming</div>
+            <div class="ehub-pop-main-text">Official AppdateGH Entertainment Playlist</div>
+            
+            <!-- Embedded Active Playlist Sandbox Context -->
+            <div class="ehub-media-wrapper">
+                <iframe id="ehub-playlist-iframe" width="100%" height="70%" src="" title="Ehub Playlist Preview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+
+            <a href="${PLAYLIST_URL}" target="_blank" class="ehub-cta-button">
+                Open Full Playlist Experience <span>➔</span>
+            </a>
+        </div>
+    </div>
+</div>
+`;
+document.body.insertAdjacentHTML("beforeend", html);
+
+/* ================= ANIMATION & EVENT CONTROLS ================= */
+const overlay = document.getElementById("ehub-popup-overlay");
+const closeBtn = document.getElementById("ehub-pop-close");
+const playerFrame = document.getElementById("ehub-playlist-iframe");
+
+// Global activation function linked specifically to open triggers or auto-load routines
+window.launchEhubPlaylistPopup = function() {
+    // Lazily load player frame to maximize initial page loading performance
+    if (!playerFrame.src || playerFrame.src === "" || playerFrame.src === window.location.href) {
+        playerFrame.src = EMBED_PLAYER_URL;
+    }
+    overlay.classList.add("active");
+};
+
+// Event Bindings
+closeBtn.onclick = function() {
+    overlay.classList.remove("active");
+    // Clear playback immediately on modal dismiss to eliminate background noise leaks
+    playerFrame.src = ""; 
+};
+
+overlay.onclick = function(e) {
+    if (e.target === overlay) {
+        overlay.classList.remove("active");
+        playerFrame.src = "";
+    }
+};
+
+/* ================= SYSTEM AUTOMATION ================= */
+// Auto-triggers the layout exactly 1.5 seconds after AppdateGH finishes parsing initial viewport content
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+        window.launchEhubPlaylistPopup();
+    }, 1500);
+});
+
+})();
+</script>
+
+
+
+
 <style>
 body{
   margin:0;
