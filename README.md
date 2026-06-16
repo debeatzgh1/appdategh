@@ -115,7 +115,7 @@ const css = `
 /* Built-in Video Frame Preview Container */
 .ehub-media-wrapper {
     width: 100%;
-    height: 150px;
+    height: 200px;
     border-radius: 14px;
     overflow: hidden;
     background: #090d16;
@@ -171,11 +171,11 @@ const html = `
         </div>
         <div class="ehub-pop-body">
             <div class="ehub-pop-subtitle">Now Streaming</div>
-            <div class="ehub-pop-main-text">Official AppdateGH Entertainment Playlist</div>
+            <div class="ehub-pop-main-text">Entertainment Playlist</div>
             
             <!-- Embedded Active Playlist Sandbox Context -->
             <div class="ehub-media-wrapper">
-                <iframe id="ehub-playlist-iframe" width="100%" height="100%" src="" title="Ehub Playlist Preview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <iframe id="ehub-playlist-iframe" width="100%" height="120%" src="" title="Ehub Playlist Preview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
 
             <a href="${PLAYLIST_URL}" target="_blank" class="ehub-cta-button">
