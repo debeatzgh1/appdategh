@@ -175,7 +175,7 @@ const html = `
             
             <!-- Embedded Active Playlist Sandbox Context -->
             <div class="ehub-media-wrapper">
-                <iframe id="ehub-playlist-iframe" width="100%" height="70%" src="" title="Ehub Playlist Preview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <iframe id="ehub-playlist-iframe" width="100%" height="100%" src="" title="Ehub Playlist Preview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
 
             <a href="${PLAYLIST_URL}" target="_blank" class="ehub-cta-button">
