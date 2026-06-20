@@ -1,3 +1,289 @@
+<div id="dbz-faq-hub">
+    <style>
+        #dbz-faq-hub {
+            --dbz-space-bg: #090d16;
+            --dbz-panel-bg: rgba(15, 23, 42, 0.65);
+            --dbz-card-border: rgba(255, 255, 255, 0.06);
+            --dbz-text-main: #f8fafc;
+            --dbz-text-muted: #94a3b8;
+            --dbz-accent-neon: #d946ef; /* Ehub / DeBeatzGH Accent Magenta */
+            --dbz-accent-blue: #3b82f6;
+            
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background: var(--dbz-space-bg);
+            color: var(--dbz-text-main);
+            padding: 40px 16px;
+            max-width: 768px;
+            margin: 0 auto;
+            border-radius: 24px;
+        }
+
+        #dbz-faq-hub h2 {
+            text-align: center;
+            font-size: 1.75rem;
+            font-weight: 900;
+            margin-bottom: 24px;
+            background: linear-gradient(45deg, var(--dbz-text-main), var(--dbz-text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        /* Swipeable Mobile Category Bar */
+        #dbz-faq-hub .category-slider {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--dbz-card-border);
+        }
+
+        #dbz-faq-hub .category-slider::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome/Safari */
+        }
+
+        #dbz-faq-hub .cat-btn {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--dbz-card-border);
+            color: var(--dbz-text-muted);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #dbz-faq-hub .cat-btn.active {
+            background: linear-gradient(135deg, var(--dbz-accent-neon) 0%, var(--dbz-accent-blue) 100%);
+            color: #ffffff;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(217, 70, 239, 0.25);
+        }
+
+        /* Lazy Load Accordion Layout */
+        #dbz-faq-hub .faq-wrapper {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        #dbz-faq-hub .faq-wrapper.active {
+            display: flex;
+            animation: dbzFadeIn 0.35s ease;
+        }
+
+        #dbz-faq-hub .faq-item {
+            background: var(--dbz-panel-bg);
+            border: 1px solid var(--dbz-card-border);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: border-color 0.2s ease;
+        }
+
+        #dbz-faq-hub .faq-trigger {
+            width: 100%;
+            padding: 16px 20px;
+            text-align: left;
+            background: transparent;
+            border: none;
+            color: var(--dbz-text-main);
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #dbz-faq-hub .faq-icon {
+            font-size: 0.75rem;
+            color: var(--dbz-text-muted);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+        }
+
+        #dbz-faq-hub .faq-item.open {
+            border-color: rgba(217, 70, 239, 0.25);
+        }
+
+        #dbz-faq-hub .faq-item.open .faq-icon {
+            transform: rotate(180deg);
+            color: var(--dbz-accent-neon);
+        }
+
+        #dbz-faq-hub .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        #dbz-faq-hub .faq-content-inner {
+            padding: 16px 20px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: var(--dbz-text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        @keyframes dbzFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="category-slider" id="dbz-faq-cats">
+        <button class="cat-btn active" onclick="switchFaqCategory('general')">General Portal</button>
+        <button class="cat-btn" onclick="switchFaqCategory('ehub')">Ehub Streaming</button>
+        <button class="cat-btn" onclick="switchFaqCategory('resources')">Creative Assets</button>
+    </div>
+
+    <div class="faq-wrapper active" id="faq-general">
+        <div class="faq-item">
+            <button class="faq-trigger" onclick="toggleFaqAccordion(this, 'What is the DeBeatzGH workspace hub?')">
+                <span>What is the DeBeatzGH workspace hub?</span>
+                <span class="faq-icon">▼</span>
+            </button>
+            <div class="faq-content"><div class="faq-content-inner"></div></div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-trigger" onclick="toggleFaqAccordion(this, 'How do I submit forms via GitHub pages safely?')">
+                <span>How do I submit forms via GitHub pages safely?</span>
+                <span class="faq-icon">▼</span>
+            </button>
+            <div class="faq-content"><div class="faq-content-inner"></div></div>
+        </div>
+    </div>
+
+    <div class="faq-wrapper" id="faq-ehub">
+        <div class="faq-item">
+            <button class="faq-trigger" onclick="toggleFaqAccordion(this, 'Where can I find the official music countdown charts?')">
+                <span>Where can I find the official music countdown charts?</span>
+                <span class="faq-icon">▼</span>
+            </button>
+            <div class="faq-content"><div class="faq-content-inner"></div></div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-trigger" onclick="toggleFaqAccordion(this, 'Can I integrate the floating Ehub widget into my blog?')">
+                <span>Can I integrate the floating Ehub widget into my blog?</span>
+                <span class="faq-icon">▼</span>
+            </button>
+            <div class="faq-content"><div class="faq-content-inner"></div></div>
+        </div>
+    </div>
+
+    <div class="faq-wrapper" id="faq-resources">
+        <div class="faq-item">
+            <button class="faq-trigger" onclick="toggleFaqAccordion(this, 'Are the blogger templates free to modify?')">
+                <span>Are the blogger templates free to modify?</span>
+                <span class="faq-icon">▼</span>
+            </button>
+            <div class="faq-content"><div class="faq-content-inner"></div></div>
+        </div>
+    </div>
+
+    <script>
+        // Tab Switch Engine
+        function switchFaqCategory(catId) {
+            // Deactivate existing layouts
+            document.querySelectorAll('#dbz-faq-hub .faq-wrapper').forEach(wrapper => {
+                wrapper.classList.remove('active');
+            });
+            document.querySelectorAll('#dbz-faq-hub .cat-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Set current target view
+            document.getElementById(`faq-${catId}`).classList.add('active');
+            
+            // Highlight target tab element dynamically
+            const activeBtn = Array.from(document.querySelectorAll('#dbz-faq-hub .cat-btn')).find(btn => {
+                return btn.getAttribute('onclick').includes(catId);
+            });
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+                activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }
+
+        // Lazy-Loading Accordion Logic Engine
+        function toggleFaqAccordion(triggerElement, questionText) {
+            const faqItem = triggerElement.parentElement;
+            const contentPane = faqItem.querySelector('.faq-content');
+            const innerTextNode = faqItem.querySelector('.faq-content-inner');
+
+            // CRITICAL: Lazy Content Allocation Injection Guard
+            if (!innerTextNode.innerHTML || innerTextNode.innerHTML.trim() === "") {
+                innerTextNode.innerHTML = fetchLazyFaqData(questionText);
+            }
+
+            // Close other sibling items in the active view block
+            const currentWrapper = faqItem.parentElement;
+            currentWrapper.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('open');
+                    item.querySelector('.faq-content').style.maxHeight = null;
+                }
+            });
+
+            // Toggle target element
+            if (faqItem.classList.contains('open')) {
+                faqItem.classList.remove('open');
+                contentPane.style.maxHeight = null;
+            } else {
+                faqItem.classList.add('open');
+                contentPane.style.maxHeight = contentPane.scrollHeight + "px";
+            }
+        }
+
+        // Mock Data Dictionary Repository (Simulates secure API thread processing)
+        function fetchLazyFaqData(question) {
+            const dictionary = {
+                "What is the DeBeatzGH workspace hub?": "The DeBeatzGH workspace hub is a unified dashboard designed to catalog tools, widgets, entertainment pipelines, and custom API interfaces for creators, developers, and platform managers.",
+                "How do I submit forms via GitHub pages safely?": "Our system integrates lightweight sandboxed oembed environments. Your form fields render lazily inside designated sandboxes, bypassing raw infrastructure processing for maximum data compliance.",
+                "Where can I find the official music countdown charts?": "All digital entertainment updates are broadcast live inside the Ehub portal stream. Simply deploy the layout toggle widget or launch our system carousel overlays to view updated ranks.",
+                "Can I integrate the floating Ehub widget into my blog?": "Yes. The modular architecture is designed precisely to deploy inside standard GitHub project directories or Blogger static layouts with full theme styling isolation properties.",
+                "Are the blogger templates free to modify?": "Absolutely. All layout templates, UI scripts, and asset tools generated across the DeBeatzGH ecosystem are distributed as completely customizable blueprints to scale up your platforms."
+            };
+            return dictionary[question] || "System parameter updated. Documentation log file is processing verification lines.";
+        }
+
+        // SWIPE GESTURE CONTROLS (Enables horizontal category swipe parsing for touch panels)
+        (function() {
+            const slider = document.getElementById('dbz-faq-cats');
+            let isDown = false;
+            let startX, scrollLeft;
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+            slider.addEventListener('mouseleave', () => isDown = false);
+            slider.addEventListener('mouseup', () => isDown = false);
+            slider.addEventListener('mousemove', (e) => {
+                if(!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+        })();
+    </script>
+</div>
+
+
+
 <!-- Ehub Entertainment Popup Animation Component -->
 <script>
 (function(){
